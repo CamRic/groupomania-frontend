@@ -10,6 +10,7 @@
 <script>
 import { defineComponent } from "vue";
 import LoginForm from "components/LoginForm.vue";
+import { useCounterStore } from "../pinia/counter";
 
 export default defineComponent({
   name: "LoginPage",

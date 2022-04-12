@@ -29,14 +29,22 @@
           class="q-ml-sm"
         />
       </div>
+      <p>Counter: {{ doubleCount }}</p>
     </q-form>
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
+import { useCounterStore } from "../pinia/counter.js";
 
 export default {
   name: "LoginForm",
+
+  data() {
+    const counter = useCounterStore();
+    counter.counter++;
+    return counter;
+  },
 };
 </script>

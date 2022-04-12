@@ -8,6 +8,7 @@
 
 <script>
 import { defineComponent, ref } from "vue";
+import { useCounterStore } from "../pinia/counter.js";
 
 export default defineComponent({
   name: "LoginLayout",
