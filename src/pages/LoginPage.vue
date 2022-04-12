@@ -1,7 +1,9 @@
 <template>
   <q-page class="flex flex-center">
-    <q-img src="../assets/icon.png" style="width: 80%" />
-    <LoginForm />
+    <div style="width: 60%">
+      <q-img src="../assets/icon-above-font.png" />
+      <LoginForm />
+    </div>
   </q-page>
 </template>
 

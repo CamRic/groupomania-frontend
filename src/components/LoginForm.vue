@@ -1,31 +1,26 @@
 <template>
-  <div class="q-pa-md" style="max-width: 400px">
+  <div class="q-pa-md">
+    <h3>Connexion</h3>
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
       <q-input
         filled
-        v-model="name"
-        label="Your name *"
-        hint="Name and surname"
+        v-model="email"
+        label="Adresse email"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+        :rules="[(val) => (val && val.length > 0) || 'Entrée non valide']"
       />
 
       <q-input
         filled
-        type="number"
-        v-model="age"
-        label="Your age *"
+        type="password"
+        v-model="password"
+        label="Mot de passe"
         lazy-rules
-        :rules="[
-          (val) => (val !== null && val !== '') || 'Please type your age',
-          (val) => (val > 0 && val < 100) || 'Please type a real age',
-        ]"
+        :rules="[(val) => (val && val.length > 0) || 'Entrée non valide']"
       />
 
-      <q-toggle v-model="accept" label="I accept the license and terms" />
-
       <div>
-        <q-btn label="Submit" type="submit" color="primary" />
+        <q-btn label="connexion" color="primary" />
         <q-btn
           label="Reset"
           type="reset"
@@ -43,11 +38,5 @@ import { ref } from "vue";
 
 export default {
   name: "LoginForm",
-
-  setup() {
-    return {
-      accept: ref(true),
-    };
-  },
 };
 </script>
