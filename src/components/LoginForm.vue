@@ -1,7 +1,7 @@
 <template>
-  <div class="q-pa-md">
-    <h3>Connexion</h3>
-    <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+  <div class="self-center items-center" style="width: inherit">
+    <h5>Connexion</h5>
+    <q-form @submit="onSubmit">
       <q-input
         filled
         v-model="email"
@@ -19,17 +19,11 @@
         :rules="[(val) => (val && val.length > 0) || 'Entrée non valide']"
       />
 
+      <a href="#">S'inscire</a>
+
       <div>
         <q-btn label="connexion" color="primary" />
-        <q-btn
-          label="Reset"
-          type="reset"
-          color="primary"
-          flat
-          class="q-ml-sm"
-        />
       </div>
-      <p>Counter: {{ doubleCount }}</p>
     </q-form>
   </div>
 </template>

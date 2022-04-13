@@ -1,31 +1,24 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title> Quasar App </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
+  <q-layout view="hHh lpr lFf">
+    <HeaderComponent @showLeftDrawer="toggleLeftDrawer" />
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+        <q-item>
+          <q-item-section>
+            <q-item-label>Les derniers sujets</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section>
+            <q-item-label>Mes sujets</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section>
+            <q-item-label>Mes participations</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
@@ -37,7 +30,7 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import EssentialLink from "components/EssentialLink.vue";
+import HeaderComponent from "components/HeaderComponent.vue";
 
 const linksList = [
   {
@@ -84,23 +77,24 @@ const linksList = [
   },
 ];
 
-export default defineComponent({
+export default {
   name: "MainLayout",
 
   components: {
-    EssentialLink,
+    HeaderComponent,
   },
 
-  setup() {
-    const leftDrawerOpen = ref(true);
-
+  data() {
     return {
       essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
+      leftDrawerOpen: true,
     };
   },
-});
+
+  methods: {
+    toggleLeftDrawer(data) {
+      this.leftDrawerOpen = !this.leftDrawerOpen;
+    },
+  },
+};
 </script>
