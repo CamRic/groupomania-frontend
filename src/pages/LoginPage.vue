@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex justify-center">
-    <div class="flex column align-center" style="width: 60%">
+    <div class="flex column align-center q-my-lg" style="width: 60%">
       <q-img
         class="self-center"
         src="../assets/icon-above-font.png"

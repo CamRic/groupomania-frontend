@@ -1,8 +1,10 @@
 <template>
   <div class="self-center items-center" style="width: inherit">
-    <h5>Inscription</h5>
+    <h5 class="q-mb-sm">Inscription</h5>
+    <q-separator class="q-mb-lg" spaced="true" size="4px" />
     <q-form @submit="onSubmit">
       <q-input
+        class="q-mb-lg"
         filled
         v-model="email"
         label="Adresse email"
@@ -11,6 +13,7 @@
       />
 
       <q-input
+        class="q-mb-lg"
         filled
         type="password"
         v-model="password"
@@ -20,6 +23,7 @@
       />
 
       <q-input
+        class="q-mb-lg"
         filled
         type="password"
         v-model="validPassword"
@@ -29,6 +33,7 @@
       />
 
       <q-input
+        class="q-mb-lg"
         filled
         v-model="first_name"
         label="Prenom"
@@ -37,6 +42,7 @@
       />
 
       <q-input
+        class="q-mb-lg"
         filled
         v-model="last_name"
         label="Nom"
