@@ -1,11 +1,12 @@
 <template>
   <q-header
     elevated
-    class="q-px-xs"
-    style="height: 100px; justify-content: center"
+    class="q-px-xs flex row content-center"
+    style="height: 100px; justify-content: center; background-color: #ba4e55"
   >
-    <q-toolbar style="justify-content: space-between; width: 80%; margin: auto">
+    <q-toolbar style="justify-content: center; width: 80%; margin: auto">
       <q-btn
+        class="q-mr-auto"
         flat
         dense
         round
@@ -14,12 +15,13 @@
         @click="emitLeftDrawerOpen"
       />
       <q-img
-        src="../assets/icon-left-font-monochrome-black.png"
-        width="200px"
+        src="../assets/icon-left-font-monochrome-white.png"
+        width="270px"
         height="100px"
+        style="position: fixed"
       />
 
-      <ProfilNav />
+      <ProfilNav class="q-ml-auto" />
     </q-toolbar>
   </q-header>
 </template>
@@ -37,6 +39,7 @@ export default {
   data() {
     return {
       showDrawer: true,
+      currUrl: this.$route,
     };
   },
 
@@ -50,6 +53,7 @@ export default {
 
   methods: {
     emitLeftDrawerOpen(data) {
+      console.log(this.currUrl.fullPath);
       this.$emit("showLeftDrawer", !this.showDrawer);
     },
   },

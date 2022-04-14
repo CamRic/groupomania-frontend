@@ -1,39 +1,29 @@
 <template>
-  <div class="self-center items-center" style="width: inherit">
-    <h5>Connexion</h5>
-    <q-form @submit="onSubmit">
-      <q-input
-        filled
-        v-model="email"
-        label="Adresse email"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Entrée non valide']"
-      />
+  <q-card class="flex flex-center column lognsign-card q-my-md q-pa-xl">
+    <h5 class="q-my-none">Connexion</h5>
+    <div class="form-container q-mt-xl">
+      <q-form @submit="onSubmit">
+        <FormInput label="Votre adresse mail" model="email" />
+        <FormInput label="Votre mot de passe" model="password" />
 
-      <q-input
-        filled
-        type="password"
-        v-model="password"
-        label="Mot de passe"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Entrée non valide']"
-      />
-
-      <a href="#">S'inscire</a>
-
-      <div>
-        <q-btn label="connexion" color="primary" />
-      </div>
-    </q-form>
-  </div>
+        <div>
+          <q-btn label="connexion" color="primary" />
+        </div>
+      </q-form>
+    </div>
+  </q-card>
 </template>
 
 <script>
-import { ref } from "vue";
 import { useCounterStore } from "../pinia/counter.js";
+import FormInput from "../components/FormInput.vue";
 
 export default {
   name: "LoginForm",
+
+  components: {
+    FormInput,
+  },
 
   data() {
     const counter = useCounterStore();

@@ -1,60 +1,73 @@
 <template>
-  <div class="self-center items-center" style="width: inherit">
-    <h5 class="q-mb-sm">Inscription</h5>
-    <q-separator class="q-mb-lg" spaced="true" size="4px" />
-    <q-form @submit="onSubmit">
-      <q-input
-        class="q-mb-lg"
-        filled
-        v-model="email"
-        label="Adresse email"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Entrée non valide']"
-      />
+  <q-card class="flex flex-center column lognsign-card q-my-md q-pa-xl">
+    <h5 class="q-my-none">Inscription</h5>
+    <div class="form-container q-mt-xl">
+      <q-form @submit="onSubmit">
+        <FormInput name="emailInput" label="Votre adresse mail" model="email" />
+        <FormInput label="Votre mot de passe" model="password" />
+        <FormInput label="Prenom" model="first_name" />
+        <FormInput label="Nom" model="last_name" />
 
-      <q-input
-        class="q-mb-lg"
-        filled
-        type="password"
-        v-model="password"
-        label="Mot de passe"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Entrée non valide']"
-      />
-
-      <q-input
-        class="q-mb-lg"
-        filled
-        type="password"
-        v-model="validPassword"
-        label="Vérification mot de passe"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Entrée non valide']"
-      />
-
-      <q-input
-        class="q-mb-lg"
-        filled
-        v-model="first_name"
-        label="Prenom"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Entrée non valide']"
-      />
-
-      <q-input
-        class="q-mb-lg"
-        filled
-        v-model="last_name"
-        label="Nom"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Entrée non valide']"
-      />
-
-      <a href="#">Se connecter</a>
-
-      <div>
-        <q-btn label="inscription" color="primary" />
-      </div>
-    </q-form>
-  </div>
+        <div>
+          <q-btn label="s'inscrire" color="primary" @click="onSubmit" />
+        </div>
+      </q-form>
+    </div>
+  </q-card>
 </template>
+
+<script>
+import FormInput from "../components/FormInput.vue";
+import { api } from "src/boot/axios";
+
+export default {
+  name: "RegisterForm",
+
+  components: {
+    FormInput,
+  },
+
+  methods: {
+    /*
+    sendSubRequest() {
+      api
+        .post('http://localhost:3000/user', {
+          email:
+        })
+    }
+    */
+    onSubmit(e) {
+      console.log(e.target);
+      /*
+      const form = e.target;
+
+      const formData = new FormData(form); // get all named inputs in form
+      for (const [inputName, value] of formData) {
+        console.log({ inputName, value });
+      }
+      */
+    },
+  },
+};
+</script>
+
+<style lang="scss">
+.lognsign-card {
+  //width: 60%;
+  height: fit-content;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: $groupomania1;
+  justify-content: center;
+}
+.form-container {
+  max-width: 600px;
+  min-width: 400px;
+  height: auto;
+  background-color: $groupomania1;
+  > * {
+    background-color: $groupomania1;
+  }
+}
+</style>

@@ -9,3 +9,9 @@ export default defineComponent({
   name: "App",
 });
 </script>
+
+<style lang="scss">
+a {
+  color: #000;
+}
+</style>
