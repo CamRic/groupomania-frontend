@@ -5,6 +5,7 @@
     style="background-color: #ffdede; border-radius: 10px 10px 10px 10px"
     v-model="model"
     label="label"
+    type="type"
   />
 </template>
 
@@ -21,7 +22,14 @@ export default {
       label: {
         type: String,
       },
+      type: {
+        type: String,
+      },
     };
+  },
+
+  data() {
+    return {};
   },
 };
 </script>

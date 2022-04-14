@@ -3,10 +3,41 @@
     <h5 class="q-my-none">Inscription</h5>
     <div class="form-container q-mt-xl">
       <q-form @submit="onSubmit">
-        <FormInput name="emailInput" label="Votre adresse mail" model="email" />
-        <FormInput label="Votre mot de passe" model="password" />
-        <FormInput label="Prenom" model="first_name" />
-        <FormInput label="Nom" model="last_name" />
+        <q-input
+          class="q-mb-md"
+          filled
+          style="background-color: #ffdede; border-radius: 10px 10px 10px 10px"
+          v-model="email"
+          label="Votre adresse mail"
+          type="email"
+        />
+
+        <q-input
+          type="password"
+          class="q-mb-md"
+          v-model="password"
+          filled
+          style="background-color: #ffdede; border-radius: 10px 10px 10px 10px"
+          label="Votre mot de passe"
+        />
+
+        <q-input
+          type="text"
+          class="q-mb-md"
+          v-model="first_name"
+          filled
+          style="background-color: #ffdede; border-radius: 10px 10px 10px 10px"
+          label="Votre prénom"
+        />
+
+        <q-input
+          type="text"
+          class="q-mb-md"
+          v-model="last_name"
+          filled
+          style="background-color: #ffdede; border-radius: 10px 10px 10px 10px"
+          label="Votre nom"
+        />
 
         <div>
           <q-btn label="s'inscrire" color="primary" @click="onSubmit" />
@@ -17,14 +48,16 @@
 </template>
 
 <script>
-import FormInput from "../components/FormInput.vue";
-import { api } from "src/boot/axios";
-
 export default {
   name: "RegisterForm",
 
-  components: {
-    FormInput,
+  components: {},
+
+  data() {
+    return {
+      password: "",
+      email: "",
+    };
   },
 
   methods: {
