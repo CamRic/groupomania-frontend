@@ -31,6 +31,7 @@
 
 <script>
 import { useCounterStore } from "../pinia/counter.js";
+import { useUserStore } from "src/pinia/user.store.js";
 import { api } from "src/boot/axios";
 
 export default {
@@ -40,9 +41,11 @@ export default {
 
   data() {
     const counter = useCounterStore();
+    const userStore = useUserStore();
     counter.counter++;
     return {
       counter,
+      userStore,
       password: "",
       email: "",
     };
@@ -57,6 +60,10 @@ export default {
         })
         .then((res) => {
           console.log(res);
+          localStorage.setItem("token", res.data.token);
+          console.log(localStorage.getItem("token"));
+          this.userStore.user_id = res.data.user_id;
+          console.log(this.userStore.getUserId);
           this.$router.push({ path: "/" });
         })
         .catch((err) => console.log(err));

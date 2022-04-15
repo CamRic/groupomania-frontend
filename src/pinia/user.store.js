@@ -20,8 +20,8 @@ export const useUserStore = defineStore("user_store", {
     },
   },
 
-  setters: {
-    setUserId(state, id) {
+  actions: {
+    setUserId(id) {
       state.user_id = id;
     },
     setUserFirstName(state, name) {
