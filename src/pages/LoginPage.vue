@@ -2,7 +2,7 @@
   <q-page class="flex column flex-start content-center pink-bg">
     <div class="flex align-center">
       <LoginForm v-if="loging" />
-      <RegisterForm v-else />
+      <RegisterForm v-else @switchForm="changeForm" />
     </div>
     <p v-if="loging" @click="changeForm">S'inscrire</p>
     <p v-else @click="changeForm">Se connecter</p>

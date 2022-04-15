@@ -40,7 +40,7 @@
         />
 
         <div>
-          <q-btn label="s'inscrire" color="primary" @click="onSubmit" />
+          <q-btn label="s'inscrire" type="submit" color="primary" />
         </div>
       </q-form>
     </div>
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import { api } from "src/boot/axios";
 export default {
   name: "RegisterForm",
 
@@ -57,28 +58,43 @@ export default {
     return {
       password: "",
       email: "",
+      first_name: "",
+      last_name: "",
     };
   },
 
   methods: {
-    /*
-    sendSubRequest() {
-      api
-        .post('http://localhost:3000/user', {
-          email:
-        })
-    }
-    */
     onSubmit(e) {
-      console.log(e.target);
-      /*
-      const form = e.target;
-
-      const formData = new FormData(form); // get all named inputs in form
-      for (const [inputName, value] of formData) {
-        console.log({ inputName, value });
+      // check user input
+      if (this.email.length < 6) {
+        console.log("invalid email");
+        return;
       }
-      */
+      if (this.password.length < 4) {
+        console.log("invalid password");
+        return;
+      }
+      if (this.first_name.length < 2) {
+        console.log("invalid name");
+        return;
+      }
+      if (this.last_name.length < 1) {
+        console.log("invalid name");
+        return;
+      }
+      // send request
+      api
+        .post("http://localhost:3000/user/signup", {
+          email: this.email,
+          password: this.password,
+          first_name: this.first_name,
+          last_name: this.last_name,
+        })
+        .then((res) => {
+          console.log(res);
+          this.$emit("switchForm");
+        })
+        .catch((err) => console.log(err));
     },
   },
 };
