@@ -1,0 +1,3 @@
+auth: stocker tocken crypter dans localstorage,
+  ajouter le tocken depuis le localstorage dans req.header.authorization pour les requetes necessitant auth
+  ? le token crypter du localstorage se supprime-til?

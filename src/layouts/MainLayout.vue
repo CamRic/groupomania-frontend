@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { useUserStore } from "../pinia/user.store.js";
 import HeaderComponent from "components/HeaderComponent.vue";
 
 export default {
@@ -19,7 +20,9 @@ export default {
   },
 
   data() {
+    var userStore = useUserStore();
     return {
+      userStore,
       leftDrawerOpen: true,
     };
   },
@@ -28,6 +31,10 @@ export default {
     toggleLeftDrawer(data) {
       this.leftDrawerOpen = !this.leftDrawerOpen;
     },
+  },
+
+  mounted() {
+    console.log(this.userStore.loggedIn);
   },
 };
 </script>

@@ -36,14 +36,6 @@ export default defineComponent({
       console.log(this.loging);
     },
   },
-  /*
-  mounted() {
-    api
-      .get("http://localhost:3000/user")
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  },
-  */
 });
 </script>
 

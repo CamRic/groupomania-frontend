@@ -22,7 +22,7 @@
         />
 
         <div>
-          <q-btn label="connexion" color="primary" />
+          <q-btn label="connexion" type="submit" color="primary" />
         </div>
       </q-form>
     </div>
@@ -31,6 +31,7 @@
 
 <script>
 import { useCounterStore } from "../pinia/counter.js";
+import { api } from "src/boot/axios";
 
 export default {
   name: "LoginForm",
@@ -40,7 +41,26 @@ export default {
   data() {
     const counter = useCounterStore();
     counter.counter++;
-    return counter;
+    return {
+      counter,
+      password: "",
+      email: "",
+    };
+  },
+
+  methods: {
+    onSubmit(e) {
+      api
+        .post("http://localhost:3000/user/login", {
+          email: this.email,
+          password: this.password,
+        })
+        .then((res) => {
+          console.log(res);
+          this.$router.push({ path: "/" });
+        })
+        .catch((err) => console.log(err));
+    },
   },
 };
 </script>
