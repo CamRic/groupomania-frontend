@@ -13,6 +13,7 @@
         icon="menu"
         aria-label="Menu"
         @click="emitLeftDrawerOpen"
+        v-show="userStore.isLogged"
       />
       <q-img
         src="../assets/icon-left-font-monochrome-white.png"
@@ -21,13 +22,14 @@
         style="position: fixed"
       />
 
-      <ProfilNav class="q-ml-auto" />
+      <ProfilNav class="q-ml-auto" v-show="userStore.isLogged" />
     </q-toolbar>
   </q-header>
 </template>
 
 <script>
 import ProfilNav from "../components/ProfilNav.vue";
+import { useUserStore } from "src/pinia/user.store";
 
 export default {
   name: "HeaderComponent",
@@ -37,7 +39,9 @@ export default {
   },
 
   data() {
+    const userStore = useUserStore();
     return {
+      userStore,
       showDrawer: true,
       currUrl: this.$route,
     };

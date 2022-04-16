@@ -13,7 +13,6 @@
 import { defineComponent } from "vue";
 import LoginForm from "components/LoginForm.vue";
 import RegisterForm from "components/RegisterForm.vue";
-import { api } from "src/boot/axios";
 
 export default defineComponent({
   name: "LoginPage",
@@ -39,12 +38,9 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .pink-bg {
   background-color: $groupomania2;
   width: 100%;
-}
-p {
-  cursor: pointer;
 }
 </style>

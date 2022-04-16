@@ -30,9 +30,7 @@
 </template>
 
 <script>
-import { useCounterStore } from "../pinia/counter.js";
 import { useUserStore } from "src/pinia/user.store.js";
-import { api } from "src/boot/axios";
 
 export default {
   name: "LoginForm",
@@ -40,11 +38,8 @@ export default {
   components: {},
 
   data() {
-    const counter = useCounterStore();
     const userStore = useUserStore();
-    counter.counter++;
     return {
-      counter,
       userStore,
       password: "",
       email: "",
@@ -52,21 +47,16 @@ export default {
   },
 
   methods: {
-    onSubmit(e) {
-      api
-        .post("http://localhost:3000/user/login", {
-          email: this.email,
-          password: this.password,
-        })
-        .then((res) => {
-          console.log(res);
-          localStorage.setItem("token", res.data.token);
-          console.log(localStorage.getItem("token"));
-          this.userStore.user_id = res.data.user_id;
-          console.log(this.userStore.getUserId);
-          this.$router.push({ path: "/" });
-        })
-        .catch((err) => console.log(err));
+    async onSubmit(e) {
+      if (this.password.length === 0 || this.email.length === 0) {
+        console.log("error email or password invalid");
+        return;
+      }
+      if (await this.userStore.userLogin(this.email, this.password)) {
+        this.$router.push({ path: "/" });
+      } else {
+        console.log("cant connect");
+      }
     },
   },
 };

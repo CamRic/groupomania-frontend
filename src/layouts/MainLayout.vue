@@ -22,6 +22,23 @@ export default {
 
   data() {
     var userStore = useUserStore();
+    userStore.$onAction(({ disconnect, userStore, args, after, onError }) => {
+      if (!this.userStore.isLogged) return;
+      after((result) => {
+        console.log("disconnected");
+        this.$router.push("/login");
+      });
+      onError((error) => {
+        console.log(error);
+      });
+    }, true);
+    userStore.$subscribe(
+      (mutation, state) => {
+        console.log("mutation", mutation);
+        console.log("state", state);
+      },
+      { detached: true }
+    );
     return {
       userStore,
       leftDrawerOpen: true,
@@ -50,10 +67,6 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-  },
-
-  mounted() {
-    console.log(this.userStore.loggedIn);
   },
 };
 </script>
