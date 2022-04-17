@@ -24,6 +24,11 @@
       </q-item>
       <q-item>
         <q-item-section>
+          <q-item-label>Nouveau sujet</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item>
+        <q-item-section>
           <q-item-label @click="userStore.disconnect">Deconnexion</q-item-label>
         </q-item-section>
       </q-item>

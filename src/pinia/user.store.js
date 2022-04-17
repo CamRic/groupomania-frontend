@@ -15,11 +15,17 @@ export const useUserStore = defineStore("user_store", {
     getUserId(state) {
       return state.user_id;
     },
+    getUserEmail(state) {
+      return state.user_email;
+    },
     getFirstName(state) {
       return state.user_first_name;
     },
     getUserName(state) {
       return state.user_first_name + " " + state.user_last_name;
+    },
+    getLastName(state) {
+      return state.user_last_name;
     },
     isLogged(state) {
       return state.loggedIn;
