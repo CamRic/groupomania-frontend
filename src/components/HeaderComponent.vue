@@ -1,8 +1,8 @@
 <template>
   <q-header
     elevated
-    class="q-px-xs flex row content-center"
-    style="height: 100px; justify-content: center; background-color: #ba4e55"
+    class="q-px-xs flex row content-center groupomania-header"
+    style="height: 100px; justify-content: center"
   >
     <q-toolbar style="justify-content: center; width: 80%; margin: auto">
       <q-btn
@@ -20,6 +20,7 @@
         width="270px"
         height="100px"
         style="position: fixed"
+        @click="this.$router.replace({ path: '/' })"
       />
 
       <ProfilNav class="q-ml-auto" v-show="userStore.isLogged" />

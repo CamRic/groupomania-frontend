@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex column flex-start content-center pink-bg">
+  <q-page class="flex column flex-start content-center groupomania-qpage">
     <div class="flex align-center">
       <LoginForm v-if="loging" />
       <RegisterForm v-else @switchForm="changeForm" />

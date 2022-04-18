@@ -19,7 +19,9 @@
       </q-item>
       <q-item>
         <q-item-section>
-          <q-item-label>Mes participations</q-item-label>
+          <q-item-label @click="this.$router.replace({ path: '/' })"
+            >Mes participations</q-item-label
+          >
         </q-item-section>
       </q-item>
       <q-item>

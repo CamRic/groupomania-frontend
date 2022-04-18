@@ -1,9 +1,9 @@
 <template>
-  <q-card class="q-pa-xl q-ma-xl">
+  <q-card class="q-pa-xl q-ma-xl groupomania-qcard">
     <h5 class="q-mt-none">{{ userStore.getUserName }}</h5>
     <q-form @submit="onSubmit" style="min-width: 270px">
       <q-input
-        class="q-mb-md"
+        class="q-mb-md groupomania-qinput"
         borderless
         filled
         stack-label
@@ -13,29 +13,30 @@
         type="email"
       />
       <q-input
-        class="q-mb-md"
+        class="q-mb-md groupomania-qinput"
+        borderless
+        filled
         stack-label
-        style="background-color: #ffdede; border-radius: 10px 10px 10px 10px"
         v-model="firstNameInput"
         label="Prénom"
         :placeholder="userStore.getFirstName"
         type="text"
       />
       <q-input
-        class="q-mb-md"
+        class="q-mb-md groupomania-qinput"
+        borderless
         filled
         stack-label
-        style="background-color: #ffdede; border-radius: 10px 10px 10px 10px"
         v-model="lastNameInput"
         label="Nom"
         :placeholder="userStore.getLastName"
         type="text"
       />
       <q-input
-        class="q-mb-md"
+        class="q-mb-md groupomania-qinput"
+        borderless
         filled
         stack-label
-        style="background-color: #ffdede; border-radius: 10px 10px 10px 10px"
         v-model="passwordInput"
         label="Mot de passe"
         type="password"

@@ -1,19 +1,16 @@
 <template>
   <q-page class="flex column flex-start content-center groupomania-qpage">
-    <div class="flex align-center">
-      <UserCard />
-    </div>
+    <TopicView />
   </q-page>
 </template>
-
 <script>
-import UserCard from "../components/UserCard.vue";
-
+import TopicView from "src/components/TopicView.vue";
 export default {
-  name: "UserPage",
+  name: "TopicPage",
 
   components: {
-    UserCard,
+    TopicView,
   },
 };
 </script>
+<style lang="scss"></style>
