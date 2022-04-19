@@ -84,7 +84,7 @@ export default {
       }
       // send request
       api
-        .post("http://localhost:3000/user/signup", {
+        .post("http://localhost:3000/api/user/signup", {
           email: this.email,
           password: this.password,
           first_name: this.first_name,

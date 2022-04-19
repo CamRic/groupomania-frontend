@@ -12,7 +12,6 @@
 <script>
 import PostCard from "src/components/PostCard.vue";
 import ReplyCard from "src/components/ReplyCard.vue";
-import { Dialog } from "quasar";
 
 export default {
   name: "TopicView",
@@ -30,19 +29,19 @@ export default {
   },
 
   methods: {
-    reply() {
-      Dialog.create({
-        title: "Réponse",
-        message: "Ecrivez votre réponse (minimum 3 caractères)",
-        prompt: {
-          model: "",
-          isValid: (val) => val.length > 2,
-          type: "textarea",
-        },
-        cancel: true,
-        persistent: true,
-      }).onOk((data) => console.log(data));
-    },
+    // reply() {
+    //   Dialog.create({
+    //     title: "Réponse",
+    //     message: "Ecrivez votre réponse (minimum 3 caractères)",
+    //     prompt: {
+    //       model: "",
+    //       isValid: (val) => val.length > 2,
+    //       type: "textarea",
+    //     },
+    //     cancel: true,
+    //     persistent: true,
+    //   }).onOk((data) => console.log(data));
+    // },
   },
 };
 </script>

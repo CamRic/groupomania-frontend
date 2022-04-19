@@ -34,7 +34,7 @@ export const useUserStore = defineStore("user_store", {
 
   actions: {
     async userLogin(inEmail, inPassword) {
-      const response = await api.post("http://localhost:3000/user/login", {
+      const response = await api.post("http://localhost:3000/api/user/login", {
         email: inEmail,
         password: inPassword,
       });
@@ -61,7 +61,7 @@ export const useUserStore = defineStore("user_store", {
       console.log("sending request...");
       console.log(this.user_id);
       api
-        .delete("http://localhost:3000/user/" + this.user_id)
+        .delete("http://localhost:3000/api/user/" + this.user_id)
         .then((res) => res.status(204).json({ message: "user deleted" }))
         .catch((err) => res.status(401).json({ error: err }));
     },
