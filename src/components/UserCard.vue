@@ -56,6 +56,7 @@
 
 <script>
 import { useUserStore } from "src/pinia/user.store";
+import { api } from "src/boot/axios";
 
 export default {
   name: "UserCard",

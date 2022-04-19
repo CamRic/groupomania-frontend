@@ -21,7 +21,7 @@
       </q-item>
       <q-item>
         <q-item-section>
-          <q-item-label @click="userStore.disconnect">Deconnexion</q-item-label>
+          <q-item-label @click="disconnectSelf">Deconnexion</q-item-label>
         </q-item-section>
       </q-item>
     </q-list>
@@ -44,6 +44,13 @@ export default {
   computed: {
     getFullName(data) {
       return this.userStore.getUserName;
+    },
+  },
+
+  methods: {
+    disconnectSelf() {
+      this.userStore.disconnect();
+      this.$router.replace({ path: "/login" });
     },
   },
 };
