@@ -25,7 +25,7 @@ export default {
       if (!this.userStore.isLogged) return;
       after((result) => {
         console.log("disconnected");
-        this.$router.replace("/login");
+        this.$router.push("/login");
       });
       onError((error) => {
         console.log(error);

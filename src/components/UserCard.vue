@@ -76,17 +76,17 @@ export default {
   },
 
   methods: {
-    // onsubmit(e) {
-    //   this.userStore.modifyUser()
-    // }
+    onsubmit(e) {
+      console.log("submitted");
+    },
     deleteSelf() {
       console.log("deleting");
       this.userStore
         .deleteUser()
-        .then((res) => {
+        .then(() => {
           this.userStore.disconnect;
           this.$router.replace("/login");
-          console.log(res);
+          console.log("user deleted");
         })
         .catch((err) => console.log(err));
     },

@@ -2,4 +2,4 @@ auth: stocker dans cookies -> ameliorer
 
 ext: emmet, snippet ...
 
-
+! delete self !
