@@ -1,7 +1,7 @@
 <template>
   <q-card class="post-qcard q-my-md q-pa-md">
     <div class="post-qcard__header">
-      <h6 class="q-my-sm">Name</h6>
+      <h6 class="q-my-sm">UserName</h6>
       <p class="q-my-sm">Date</p>
     </div>
     <q-separator />

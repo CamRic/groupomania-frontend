@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh lpr lFf">
-    <HeaderComponent @showLeftDrawer="toggleLeftDrawer" />
+    <HeaderComponent />
 
     <q-page-container>
       <router-view />
@@ -11,7 +11,6 @@
 <script>
 import { useUserStore } from "../pinia/user.store.js";
 import HeaderComponent from "components/HeaderComponent.vue";
-import { api } from "src/boot/axios";
 
 export default {
   name: "MainLayout",
@@ -26,7 +25,7 @@ export default {
       if (!this.userStore.isLogged) return;
       after((result) => {
         console.log("disconnected");
-        this.$router.push("/login");
+        this.$router.replace("/login");
       });
       onError((error) => {
         console.log(error);
@@ -41,32 +40,7 @@ export default {
     );
     return {
       userStore,
-      leftDrawerOpen: true,
     };
-  },
-
-  methods: {
-    toggleLeftDrawer(data) {
-      this.leftDrawerOpen = !this.leftDrawerOpen;
-      if (!localStorage.getItem("token")) {
-        console.log("error: no auth token");
-        return;
-      }
-      var token = "Bearer " + localStorage.getItem("token");
-      api
-        .get(
-          "http://localhost:3000/user/38ec13aa-b68a-4bf8-add0-8f308efd2360",
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => console.log(err));
-    },
   },
 };
 </script>

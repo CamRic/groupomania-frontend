@@ -1,22 +1,25 @@
 <template>
   <div class="topic-global-container">
-    <h5>Sujet: {{ topicName }}</h5>
-    <div class="flex">
-      <q-btn label="repondre" />
-      <q-btn label="actualiser" style="margin-left: auto" />
+    <h6>Sujet: {{ topicName }}</h6>
+    <div class="flex justify-end">
+      <q-btn label="actualiser" />
     </div>
     <PostCard />
+    <ReplyCard />
   </div>
 </template>
 
 <script>
 import PostCard from "src/components/PostCard.vue";
+import ReplyCard from "src/components/ReplyCard.vue";
+import { Dialog } from "quasar";
 
 export default {
   name: "TopicView",
 
   components: {
     PostCard,
+    ReplyCard,
   },
 
   data() {
@@ -24,6 +27,22 @@ export default {
       topicName: "Default topic name",
       posts: [],
     };
+  },
+
+  methods: {
+    reply() {
+      Dialog.create({
+        title: "Réponse",
+        message: "Ecrivez votre réponse (minimum 3 caractères)",
+        prompt: {
+          model: "",
+          isValid: (val) => val.length > 2,
+          type: "textarea",
+        },
+        cancel: true,
+        persistent: true,
+      }).onOk((data) => console.log(data));
+    },
   },
 };
 </script>

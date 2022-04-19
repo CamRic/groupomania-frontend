@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex column flex-start content-center groupomania-qpage">
-    <div class="index-components-container">
+    <div class="index-components-container q-my-md">
       <div class="topic-carousel-container">
         <q-carousel
           v-model="slide"

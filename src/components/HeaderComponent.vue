@@ -5,16 +5,6 @@
     style="height: 100px; justify-content: center"
   >
     <q-toolbar style="justify-content: center; width: 80%; margin: auto">
-      <q-btn
-        class="q-mr-auto"
-        flat
-        dense
-        round
-        icon="menu"
-        aria-label="Menu"
-        @click="emitLeftDrawerOpen"
-        v-show="userStore.isLogged"
-      />
       <q-img
         src="../assets/icon-left-font-monochrome-white.png"
         width="270px"

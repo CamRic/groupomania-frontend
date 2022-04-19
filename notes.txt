@@ -2,6 +2,4 @@ auth: stocker dans cookies -> ameliorer
 
 ext: emmet, snippet ...
 
-style: lognsigncard bg
 
-reponse: page

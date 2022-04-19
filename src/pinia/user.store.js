@@ -51,12 +51,22 @@ export const useUserStore = defineStore("user_store", {
       return response;
     },
     disconnect() {
-      localStorage.removeItem("token");
       this.loggedIn = false;
       this.user_email = "";
       this.user_id = "";
       this.user_first_name = "";
       this.user_last_name = "";
+    },
+    // async modifyUser(inEmail, inFisrtName, inLastName, inPassword) {
+    //   const response = await api.post('http://localhost:3000/user/' + this.user_id, {
+    //     email: inEmail,
+
+    //   })
+    // },
+    async deleteUser() {
+      console.log("sending request...");
+      response = await api.delete("http://localhost:3000/user/" + this.user_id);
+      return response;
     },
   },
 });

@@ -5,6 +5,7 @@
 <script>
 import { defineComponent } from "vue";
 import { useUserStore } from "./pinia/user.store";
+import { Cookies } from "quasar";
 
 export default defineComponent({
   name: "App",
@@ -30,7 +31,7 @@ a {
   opacity: 0.9;
 }
 .groupomania-qcard {
-  background-color: $groupomania3;
+  background-color: $groupomania1;
 }
 .groupomania-qinput {
   background-color: $groupomania2;

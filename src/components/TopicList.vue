@@ -6,7 +6,6 @@
 
 <script>
 import { useUserStore } from "../pinia/user.store";
-import { api } from "src/boot/axios";
 
 const columns = [
   {
@@ -14,7 +13,7 @@ const columns = [
     required: true,
     label: "Sujet",
     align: "left",
-    field: (row) => row.name,
+    field: (row) => row.sujet,
   },
   {
     name: "auteur",
@@ -41,7 +40,7 @@ const columns = [
 
 const rows = [
   {
-    name: "Ceci est un sujet",
+    sujet: "Ceci est un sujet",
     auteur: "Monsire",
     messages: 25,
     dernier: "31/02/2015",

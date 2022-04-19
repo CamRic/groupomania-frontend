@@ -7,26 +7,16 @@
     <q-list>
       <q-item>
         <q-item-section>
-          <q-item-label @click="this.$router.push('/user')"
+          <q-item-label @click="this.$router.replace('/user')"
             >Mon profil</q-item-label
           >
         </q-item-section>
       </q-item>
       <q-item>
         <q-item-section>
-          <q-item-label>Mes sujets</q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-item>
-        <q-item-section>
-          <q-item-label @click="this.$router.replace({ path: '/' })"
-            >Mes participations</q-item-label
+          <q-item-label @click="this.$router.replace('/newtopic')"
+            >Nouveau sujet</q-item-label
           >
-        </q-item-section>
-      </q-item>
-      <q-item>
-        <q-item-section>
-          <q-item-label>Nouveau sujet</q-item-label>
         </q-item-section>
       </q-item>
       <q-item>

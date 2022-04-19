@@ -104,9 +104,6 @@ export default {
 .lognsign-card {
   //width: 60%;
   height: fit-content;
-  background-size: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
   background-color: $groupomania1;
   justify-content: center;
 }

@@ -1,5 +1,5 @@
 <template>
-  <q-card class="q-pa-xl q-ma-xl groupomania-qcard">
+  <q-card class="q-pa-xl q-ma-md groupomania-qcard">
     <h5 class="q-mt-none">{{ userStore.getUserName }}</h5>
     <q-form @submit="onSubmit" style="min-width: 270px">
       <q-input
@@ -41,9 +41,14 @@
         label="Mot de passe"
         type="password"
       />
-      <div>
+      <div class="flex justify-between">
         <q-btn label="modifier" type="submit" color="primary" />
-        <q-btn label="supprimer" color="negative" class="q-ml-xl" />
+        <q-btn
+          label="supprimer"
+          @click="deleteSelf"
+          color="negative"
+          class="q-ml-xl"
+        />
       </div>
     </q-form>
   </q-card>
@@ -68,6 +73,23 @@ export default {
       lastNameInput,
       passwordInput,
     };
+  },
+
+  methods: {
+    // onsubmit(e) {
+    //   this.userStore.modifyUser()
+    // }
+    deleteSelf() {
+      console.log("deleting");
+      this.userStore
+        .deleteUser()
+        .then((res) => {
+          this.userStore.disconnect;
+          this.$router.replace("/login");
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+    },
   },
 };
 </script>
