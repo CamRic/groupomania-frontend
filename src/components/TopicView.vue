@@ -1,16 +1,22 @@
 <template>
   <div class="topic-global-container">
-    <h6>Sujet: {{ topicName }}</h6>
+    <h6>Sujet: {{ topic.title }}</h6>
     <div class="flex justify-end">
       <q-btn label="actualiser" />
     </div>
-    <PostCard />
-    <ReplyCard />
+    <PostCard
+      :author="author"
+      :body="topic.body"
+      :createdAt="topic.createdAt"
+    />
+
+    <ReplyCard :topicId="topic.topic_id" />
   </div>
 </template>
 
 <script>
 import PostCard from "src/components/PostCard.vue";
+import { api } from "src/boot/axios";
 import ReplyCard from "src/components/ReplyCard.vue";
 
 export default {
@@ -21,28 +27,25 @@ export default {
     ReplyCard,
   },
 
-  data() {
-    return {
-      topicName: "Default topic name",
-      posts: [],
-    };
+  props: {
+    topic: Object,
+    author: String,
+    title: String,
   },
 
-  methods: {
-    // reply() {
-    //   Dialog.create({
-    //     title: "Réponse",
-    //     message: "Ecrivez votre réponse (minimum 3 caractères)",
-    //     prompt: {
-    //       model: "",
-    //       isValid: (val) => val.length > 2,
-    //       type: "textarea",
-    //     },
-    //     cancel: true,
-    //     persistent: true,
-    //   }).onOk((data) => console.log(data));
-    // },
+  data() {
+    var topicData = JSON.parse(JSON.stringify(this.topic));
+    console.log(topicData);
+    var posts = topicData.replies;
+    console.log(posts);
+    return {
+      topicName: "Default topic name",
+      authorName: "",
+      topicData,
+      posts,
+    };
   },
+  methods: {},
 };
 </script>
 <style lang="scss">

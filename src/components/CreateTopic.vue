@@ -45,7 +45,10 @@ export default {
           title: this.topicTitle,
           topicBody: this.topicBody,
         })
-        .then((topic) => console.log(topic))
+        .then((topic) => {
+          console.log(topic);
+          this.$router.replace("/");
+        })
         .catch(() => console.log("error creating topic"));
     },
   },

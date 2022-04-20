@@ -90,7 +90,10 @@ export default {
   },
   methods: {
     goToTopicPage(evt, row, index) {
-      this.$router.replace({ path: "/topic/" + row.topic_id });
+      this.$router.push({
+        path: "/topic/" + row.topic_id,
+        query: { author: row.auteur },
+      });
     },
   },
 };
