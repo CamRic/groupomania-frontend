@@ -9,6 +9,7 @@
 import TopicView from "src/components/TopicView.vue";
 import { useRouter } from "vue-router";
 import { api } from "src/boot/axios";
+import { useTopicStore } from "src/pinia/topic.store";
 
 export default {
   name: "TopicPage",
@@ -18,9 +19,11 @@ export default {
   },
 
   data() {
+    const topicStore = useTopicStore();
     const topicId = useRouter().currentRoute.value.params.id;
     var topicAuthor = this.$route.query.author;
     var topic = {
+      topicStore,
       user_id: "",
       author: "",
       body: "",
@@ -44,11 +47,11 @@ export default {
         console.log(this.topic.user_id);
         api
           .get("http://localhost:3000/api/user/" + this.topic.user_id)
-          .then((ruen) => {
-            console.log("user: " + ruen.data);
+          .then((user) => {
+            console.log("user: " + user);
 
             this.topic.author =
-              ruen.data.first_name + " " + ruen.data.last_name;
+              user.data.first_name + " " + user.data.last_name;
           })
           .catch((err) => console.log(err));
       })

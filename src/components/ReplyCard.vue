@@ -43,7 +43,7 @@ export default {
     },
   },
   methods: {
-    onSubmit(e) {
+    async onSubmit(e) {
       // check user input
       if (this.replyBody.length < 3) {
         console.log("user input invalid!");
@@ -55,16 +55,28 @@ export default {
           user_id: this.getUserId,
           body: this.replyBody,
         })
-        .then((res) => {
+        .then(async (res) => {
           var reqUrl =
             "http://localhost:3000/api/topic/" +
             this.topicId +
             "/post/" +
             res.data.newPost.post_id;
-          api
-            .get("http://localhost:3000/api/topic/" + this.topicId)
-            .then((top) => console.log("post added to topic: " + top))
-            .catch((err) => console.log(err));
+
+          const topicRes = await api.get(
+            "http://localhost:3000/api/topic/" + this.topicId
+          );
+          console.log(topicRes);
+          var repliesArray = topicRes.data.topic.replies.replies;
+          repliesArray.push(res.data.newPost.post_id);
+          console.log(repliesArray);
+          const repliesObject = { replies: repliesArray };
+          const prom = await api.put(
+            "http://localhost:3000/api/topic/" + this.topicId,
+            {
+              replies: repliesObject,
+            }
+          );
+          console.log(prom);
         })
         .catch((err) => console.log(err));
     },

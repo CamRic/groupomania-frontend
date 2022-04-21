@@ -71,6 +71,7 @@ export default {
           api
             .get("http://localhost:3000/api/user/" + this.topicList[i].user_id)
             .then((user) => {
+              console.log(user);
               var userName =
                 user.data.user["first_name"] +
                 " " +

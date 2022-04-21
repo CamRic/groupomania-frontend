@@ -25,6 +25,7 @@ export default {
   components: {
     PostCard,
     ReplyCard,
+    PostCard,
   },
 
   props: {
