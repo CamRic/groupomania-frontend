@@ -17,6 +17,8 @@
         :createdAt="post.createdAt"
       />
     </div>
+
+    <ReplyCard :topicId="topicStore.getTopicId" />
   </div>
 </template>
 
@@ -29,7 +31,7 @@ import { useTopicStore } from "src/pinia/topic.store";
 export default {
   name: "TopicView",
 
-  components: { PostCard, PostCard },
+  components: { PostCard, ReplyCard },
 
   props: {},
 
@@ -42,6 +44,11 @@ export default {
   methods: {
     reloadPost(data) {
       console.log(this.topicStore.topicPosts);
+    },
+  },
+  watch: {
+    $route(to, from) {
+      this.topicStore.$reset;
     },
   },
 };

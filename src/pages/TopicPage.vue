@@ -25,15 +25,26 @@ export default {
       topicId,
     };
   },
-
+  //d24bd40b-d34f-4ebe-8288-c8ee20eb84ee
   created(data) {
-    this.topicStore
-      .retrieveTopicData(this.topicId)
-      .then((res) => {
-        console.log(res);
-        console.log(this.topicStore.topicObject);
-      })
-      .catch((err) => console.log(err));
+    if (!this.topicStore.isLoaded) {
+      this.topicStore
+        .retrieveTopicData(this.topicId)
+        .then((res) => {
+          console.log(res);
+          console.log(this.topicStore.topicObject);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      console.log("topic data already loaded");
+    }
+    console.log("lol");
+  },
+
+  watch: {
+    $route(to, from) {
+      this.topicStore.$reset;
+    },
   },
 };
 </script>

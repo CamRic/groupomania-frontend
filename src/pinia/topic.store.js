@@ -3,6 +3,7 @@ import { api } from "src/boot/axios";
 
 export const useTopicStore = defineStore("topic_store", {
   state: () => ({
+    isLoaded: false,
     topicObject: {},
     creatorFullName: "",
     topicPosts: [],
@@ -68,6 +69,7 @@ export const useTopicStore = defineStore("topic_store", {
                 postData["author"] =
                   res1.data.user.first_name + " " + res1.data.user.last_name;
                 this.topicPosts.push(postData);
+                this.isLoaded = true;
               })
               .catch((err) => console.log(err));
           })
