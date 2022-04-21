@@ -19,6 +19,7 @@ export const useTopicStore = defineStore("topic_store", {
         "http://localhost:3000/api/topic/" + topic_id
       );
       console.log(response);
+      return response;
     },
   },
 });
