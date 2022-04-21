@@ -24,7 +24,12 @@ export default {
     };
   },
 
-  created(data) {},
+  created(data) {
+    this.topicStore
+      .retrieveTopicData(topicId)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  },
 };
 </script>
 
