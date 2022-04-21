@@ -1,16 +1,22 @@
 <template>
   <div class="topic-global-container">
-    <h6>Sujet: {{ topic.title }}</h6>
+    <h6>Sujet: {{ topicStore.getTopicTitle }}</h6>
     <div class="flex justify-end">
-      <q-btn label="actualiser" />
+      <q-btn label="actualiser" @click="reloadPost" />
     </div>
     <PostCard
-      :author="author"
-      :body="topic.body"
-      :createdAt="topic.createdAt"
+      :author="topicStore.creatorFullName"
+      :body="topicStore.getTopicBody"
+      :createdAt="topicStore.getTopicCreationDate"
     />
 
-    <ReplyCard :topicId="topic.topic_id" />
+    <div v-for="post in topicStore.getTopicPostList" :key="post">
+      <PostCard
+        :author="post.author"
+        :body="post.body"
+        :createdAt="post.createdAt"
+      />
+    </div>
   </div>
 </template>
 
@@ -18,35 +24,26 @@
 import PostCard from "src/components/PostCard.vue";
 import { api } from "src/boot/axios";
 import ReplyCard from "src/components/ReplyCard.vue";
+import { useTopicStore } from "src/pinia/topic.store";
 
 export default {
   name: "TopicView",
 
-  components: {
-    PostCard,
-    ReplyCard,
-    PostCard,
-  },
+  components: { PostCard, PostCard },
 
-  props: {
-    topic: Object,
-    author: String,
-    title: String,
-  },
+  props: {},
 
   data() {
-    var topicData = JSON.parse(JSON.stringify(this.topic));
-    console.log(topicData);
-    var posts = topicData.replies;
-    console.log(posts);
+    const topicStore = useTopicStore();
     return {
-      topicName: "Default topic name",
-      authorName: "",
-      topicData,
-      posts,
+      topicStore,
     };
   },
-  methods: {},
+  methods: {
+    reloadPost(data) {
+      console.log(this.topicStore.topicPosts);
+    },
+  },
 };
 </script>
 <style lang="scss">
