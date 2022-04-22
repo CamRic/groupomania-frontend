@@ -1,6 +1,5 @@
 <template>
   <q-page class="flex column flex-start content-center groupomania-qpage">
-    <h5>{{ topicId }}</h5>
     <TopicView />
   </q-page>
 </template>
@@ -25,7 +24,7 @@ export default {
       topicId,
     };
   },
-  //d24bd40b-d34f-4ebe-8288-c8ee20eb84ee
+
   created(data) {
     if (!this.topicStore.isLoaded) {
       this.topicStore
@@ -38,7 +37,6 @@ export default {
     } else {
       console.log("topic data already loaded");
     }
-    console.log("lol");
   },
 
   watch: {

@@ -23,13 +23,11 @@
           <q-carousel-slide name="user">
             <div class="q-mt-md text-center">Mes sujets</div>
           </q-carousel-slide>
-          <q-carousel-slide name="posts">
-            <div class="q-mt-md text-center">Mes réponses</div>
-          </q-carousel-slide>
         </q-carousel>
       </div>
       <div class="topic-list-container">
-        <TopicList />
+        <TopicList v-if="slide === 'latest'" />
+        <UserTopicList v-if="slide === 'user'" />
       </div>
     </div>
   </q-page>
@@ -40,6 +38,7 @@ import { defineComponent } from "vue";
 import { useUserStore } from "src/pinia/user.store";
 import { ref } from "vue";
 import TopicList from "src/components/TopicList.vue";
+import UserTopicList from "src/components/UserTopicList.vue";
 
 export default defineComponent({
   name: "IndexPage",
@@ -54,7 +53,7 @@ export default defineComponent({
     };
   },
 
-  components: { TopicList },
+  components: { TopicList, UserTopicList },
 });
 </script>
 

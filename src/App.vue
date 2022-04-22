@@ -5,16 +5,53 @@
 <script>
 import { defineComponent } from "vue";
 import { useUserStore } from "./pinia/user.store";
+import { useTopicStore } from "./pinia/topic.store";
+import { api } from "./boot/axios";
 import { Cookies } from "quasar";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "App",
 
   data() {
+    const $q = useQuasar();
     const userStore = useUserStore();
+    const topicStore = useTopicStore();
     return {
+      topicStore,
       userStore,
+      $q,
     };
+  },
+
+  created() {
+    if (Cookies.has("token")) {
+      this.retrieveSession();
+    } else {
+      this.$router.push({ path: "/login" });
+    }
+  },
+
+  methods: {
+    async retrieveSession() {
+      await api({
+        method: "post",
+        url: "http://localhost:3000/api/user/retrieve",
+        headers: {
+          Authorization: "Bearer " + Cookies.get("token"),
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          this.userStore.loggedIn = true;
+          this.userStore.user_email = res.data.user_email;
+          this.userStore.user_id = res.data.user_id;
+          this.userStore.user_first_name = res.data.user_firstName;
+          this.userStore.user_last_name = res.data.user_lastName;
+          return res;
+        })
+        .catch((err) => console.log(err));
+    },
   },
 });
 </script>

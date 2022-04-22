@@ -9,7 +9,6 @@
     </q-table>
   </div>
 </template>
-
 <script>
 import { useUserStore } from "../pinia/user.store";
 import { useTopicStore } from "src/pinia/topic.store";
@@ -47,7 +46,7 @@ const columns = [
 ];
 
 export default {
-  name: "TopicList",
+  name: "UserTopicList",
 
   data() {
     const userStore = useUserStore();
@@ -65,28 +64,17 @@ export default {
 
   created(data) {
     api
-      .get("http://localhost:3000/api/topic")
+      .get("/topic/user/" + this.userStore.getUserId)
       .then((topics) => {
         this.topicList = topics.data.topics;
         for (let i = 0; i < this.topicList.length; i++) {
-          console.log(this.topicList[i].user_id);
-          api
-            .get("http://localhost:3000/api/user/" + this.topicList[i].user_id)
-            .then((user) => {
-              console.log(user);
-              var userName =
-                user.data.user["first_name"] +
-                " " +
-                user.data.user["last_name"];
-              this.rows.push({
-                sujet: this.topicList[i].title,
-                auteur: userName,
-                messages: this.topicList[i].replies.replies.length,
-                dernier: this.topicList[i].updatedAt,
-                topic_id: this.topicList[i].topic_id,
-              });
-            })
-            .catch((err) => console.log(err));
+          this.rows.push({
+            sujet: this.topicList[i].title,
+            auteur: this.userStore.getUserName,
+            messages: this.topicList[i].replies.replies.length,
+            dernier: this.topicList[i].updatedAt,
+            topic_id: this.topicList[i].topic_id,
+          });
         }
       })
       .catch((err) => console.log(err));
@@ -102,5 +90,4 @@ export default {
   },
 };
 </script>
-
 <style lang="scss"></style>

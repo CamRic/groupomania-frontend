@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { api } from "src/boot/axios";
+import { Cookies } from "quasar";
 
 export const useUserStore = defineStore("user_store", {
   state: () => ({
@@ -49,6 +50,24 @@ export const useUserStore = defineStore("user_store", {
       this.user_first_name = response.data.user_firstName;
       this.user_last_name = response.data.user_lastName;
       return response;
+    },
+    retrieveConnection() {
+      api({
+        method: "post",
+        url: "http://localhost:3000/api/user/retrieve",
+        headers: {
+          Authorization: "Bearer " + Cookies.get("token"),
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          this.loggedIn = true;
+          this.user_email = response.data.user_email;
+          this.user_id = response.data.user_id;
+          this.user_first_name = response.data.user_firstName;
+          this.user_last_name = response.data.user_lastName;
+        })
+        .catch((err) => console.log(err));
     },
     disconnect() {
       this.loggedIn = false;

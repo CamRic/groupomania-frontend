@@ -1,9 +1,5 @@
 <template>
-  <q-btn-dropdown
-    color="purple"
-    :label="userStore.getFirstName"
-    style="width: 150px"
-  >
+  <q-btn-dropdown color="purple" :label="UserName" style="width: 150px">
     <q-list>
       <q-item>
         <q-item-section>
@@ -39,6 +35,10 @@ export default {
     return {
       userStore,
     };
+  },
+
+  props: {
+    UserName: String,
   },
 
   computed: {

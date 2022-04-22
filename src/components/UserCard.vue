@@ -9,7 +9,6 @@
         stack-label
         v-model="emailInput"
         label="Email"
-        :placeholder="userStore.getUserEmail"
         type="email"
       />
       <q-input
@@ -19,7 +18,6 @@
         stack-label
         v-model="firstNameInput"
         label="Prénom"
-        :placeholder="userStore.getFirstName"
         type="text"
       />
       <q-input
@@ -29,7 +27,6 @@
         stack-label
         v-model="lastNameInput"
         label="Nom"
-        :placeholder="userStore.getLastName"
         type="text"
       />
       <q-input
@@ -41,6 +38,7 @@
         label="Mot de passe"
         type="password"
       />
+
       <div class="flex justify-between">
         <q-btn label="modifier" type="submit" color="primary" />
         <q-btn
@@ -67,7 +65,9 @@ export default {
     var firstNameInput = "";
     var lastNameInput = "";
     var passwordInput = "";
+    var newPasswordInput = "";
     return {
+      newPasswordInput,
       userStore,
       emailInput,
       firstNameInput,
@@ -76,9 +76,23 @@ export default {
     };
   },
 
+  created() {
+    this.emailInput = this.userStore.getUserEmail;
+    this.firstNameInput = this.userStore.getFirstName;
+    this.lastNameInput = this.userStore.getLastName;
+  },
+
   methods: {
-    onsubmit(e) {
-      console.log("submitted");
+    onSubmit(e) {
+      api
+        .put("/user/" + this.userStore.getUserId, {
+          email: this.emailInput,
+          first_name: this.firstNameInput,
+          last_name: this.lastNameInput,
+          password: this.passwordInput,
+        })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
     },
     deleteSelf() {
       console.log("deleting");

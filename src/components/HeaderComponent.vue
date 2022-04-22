@@ -13,7 +13,11 @@
         @click="this.$router.replace({ path: '/' })"
       />
 
-      <ProfilNav class="q-ml-auto" v-show="userStore.isLogged" />
+      <ProfilNav
+        class="q-ml-auto"
+        v-show="userStore.isLogged"
+        :UserName="userStore.getFirstName"
+      />
     </q-toolbar>
   </q-header>
 </template>
