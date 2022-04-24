@@ -9,14 +9,28 @@
     </div>
     <q-separator />
     <p class="q-my-sm flex justify-end">{{ createdAt }}</p>
+    <q-icon
+      v-if="userStore.getUserId === author_id"
+      class="fa-solid fa-trash-can"
+    />
   </q-card>
 </template>
 <script>
+import { useUserStore } from "src/pinia/user.store";
 export default {
   name: "PostCard",
 
+  data() {
+    const userStore = useUserStore();
+    return {
+      userStore,
+    };
+  },
+
   props: {
+    post_id: String,
     author: String,
+    author_id: String,
     body: String,
     createdAt: String,
   },

@@ -1,20 +1,30 @@
 <template>
   <div class="topic-global-container">
-    <h6>Sujet: {{ topicStore.getTopicTitle }}</h6>
-    <div class="flex justify-end">
-      <q-btn label="actualiser" @click="reloadPost" />
-    </div>
-    <PostCard
-      :author="topicStore.creatorFullName"
+    <!-- <h6>Sujet: {{ topicStore.getTopicTitle }}</h6> -->
+    <TopicCard
+      :author="topicStore.getTopicCreatorName"
       :body="topicStore.getTopicBody"
-      :createdAt="topicStore.getTopicCreationDate"
+      :title="topicStore.getTopicTitle"
+      :authorId="topicStore.getTopicCreatorId"
+      :creationDate="topicStore.getTopicCreationDate"
     />
+    <div class="flex justify-start">
+      <q-btn label="actualiser" @click="reloadPost" />
+      <q-btn
+        class="q-ml-auto"
+        v-if="topicStore.getTopicCreatorId === userStore.getUserId"
+        label="supprimer"
+        @click="deleteTopic"
+      />
+    </div>
 
     <div v-for="post in topicStore.getTopicPostList" :key="post">
       <PostCard
         :author="post.author"
         :body="post.body"
         :createdAt="post.createdAt"
+        :author_id="post.user_id"
+        :post_id="post.post_id"
       />
     </div>
 
@@ -24,26 +34,32 @@
 
 <script>
 import PostCard from "src/components/PostCard.vue";
-import { api } from "src/boot/axios";
+import { useUserStore } from "src/pinia/user.store";
 import ReplyCard from "src/components/ReplyCard.vue";
 import { useTopicStore } from "src/pinia/topic.store";
+import TopicCard from "./TopicCard.vue";
 
 export default {
   name: "TopicView",
 
-  components: { PostCard, ReplyCard },
+  components: { PostCard, ReplyCard, TopicCard },
 
-  props: {},
+  props: {
+    topicId: String,
+  },
 
   data() {
     const topicStore = useTopicStore();
+    const userStore = useUserStore();
     return {
+      userStore,
       topicStore,
     };
   },
   methods: {
-    reloadPost(data) {
-      console.log(this.topicStore.topicPosts);
+    reloadPost() {
+      this.topicStore.reloadTopicPostsList(this.topicId);
+      this.$forceUpdate;
     },
   },
   watch: {

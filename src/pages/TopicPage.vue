@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex column flex-start content-center groupomania-qpage">
-    <TopicView />
+    <TopicView :topicId="topicId" />
   </q-page>
 </template>
 

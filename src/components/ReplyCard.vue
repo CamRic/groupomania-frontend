@@ -49,7 +49,7 @@ export default {
         console.log("user input invalid!");
         return;
       }
-      api
+      await api
         .post("http://localhost:3000/api/post", {
           topic_id: this.topicId,
           user_id: this.getUserId,
@@ -79,6 +79,7 @@ export default {
           console.log(prom);
         })
         .catch((err) => console.log(err));
+      //this.$parent.reloadPost;
     },
   },
 };

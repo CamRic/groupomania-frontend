@@ -43,6 +43,41 @@ export const useTopicStore = defineStore("topic_store", {
   },
 
   actions: {
+    reloadTopicPostsList(topic_id) {
+      this.topicPosts = [];
+      api
+        .get("/topic/" + topic_id)
+        .then((topic) => {
+          console.log(topic);
+          const topicList = topic.data.topic.replies.replies;
+          console.log(topicList);
+          for (let i = 0; i < topicList.length; i++) {
+            api
+              .get("/post/" + topicList[i])
+              .then((post) => {
+                console.log(post);
+                var postData = {};
+                postData["body"] = post.data.post.body;
+                postData["createdAt"] = post.data.post.createdAt;
+                postData["user_id"] = post.data.post.user_id;
+                postData["post_id"] = post.data.post.post_id;
+                api
+                  .get("/user/" + postData.user_id)
+                  .then((user) => {
+                    postData["author"] =
+                      user.data.user.first_name +
+                      " " +
+                      user.data.user.last_name;
+                    this.topicPosts.push(postData);
+                    console.log(this.topicPosts);
+                  })
+                  .catch((err) => console.log(err));
+              })
+              .catch((err) => console.log(err));
+          }
+        })
+        .catch((err) => console.log(err));
+    },
     async retrieveTopicData(topic_id) {
       this.isLoaded = false;
       this.topicObject = {};
@@ -59,12 +94,10 @@ export const useTopicStore = defineStore("topic_store", {
       const response2 = await api.get(
         "http://localhost:3000/api/user/" + this.topicObject.user_id
       );
-      console.log(response2);
       this.creatorFullName =
         response2.data.user.first_name + " " + response2.data.user.last_name;
 
       // getting posts datas
-      console.log("replies count: " + this.topicObject.replies.replies.length);
       const topicReplies = this.topicObject.replies.replies;
       for (var i = 0; i < topicReplies.length; i++) {
         await api
@@ -73,6 +106,8 @@ export const useTopicStore = defineStore("topic_store", {
             var postData = {};
             postData["body"] = res.data.post.body;
             postData["createdAt"] = res.data.post.createdAt;
+            postData["user_id"] = res.data.post.user_id;
+            postData["post_id"] = res.data.post.post_id;
             var creatorId = res.data.post.user_id;
             // getting post creator name
             await api
