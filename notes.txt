@@ -1,5 +1,13 @@
-auth: stocker dans cookies -> ameliorer
+
 
 ext: emmet, snippet ...
 
 date topiclist
+
+ajouter loading spinner avant rechargement de page quand post
+
+! images
+! admin
+! popup
+! css
+! dates

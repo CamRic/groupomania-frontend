@@ -77,9 +77,9 @@ export default {
             }
           );
           console.log(prom);
+          this.$emit("emitted");
         })
         .catch((err) => console.log(err));
-      //this.$parent.reloadPost;
     },
   },
 };

@@ -1,6 +1,5 @@
 <template>
   <div class="topic-global-container">
-    <!-- <h6>Sujet: {{ topicStore.getTopicTitle }}</h6> -->
     <TopicCard
       :author="topicStore.getTopicCreatorName"
       :body="topicStore.getTopicBody"
@@ -28,7 +27,7 @@
       />
     </div>
 
-    <ReplyCard :topicId="topicStore.getTopicId" />
+    <ReplyCard :topicId="topicStore.getTopicId" @emitted="reloadPage" />
   </div>
 </template>
 
@@ -60,6 +59,12 @@ export default {
     reloadPost() {
       this.topicStore.reloadTopicPostsList(this.topicId);
       this.$forceUpdate;
+    },
+    async reloadPage() {
+      console.log("reloading...");
+      await new Promise((r) => setTimeout(r, 2500));
+      this.reloadPost();
+      console.log("tip");
     },
   },
   watch: {
