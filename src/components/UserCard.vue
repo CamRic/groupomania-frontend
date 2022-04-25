@@ -55,6 +55,7 @@
 <script>
 import { useUserStore } from "src/pinia/user.store";
 import { api } from "src/boot/axios";
+import { Cookies } from "quasar";
 
 export default {
   name: "UserCard",
@@ -91,19 +92,19 @@ export default {
           last_name: this.lastNameInput,
           password: this.passwordInput,
         })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
-    },
-    deleteSelf() {
-      console.log("deleting");
-      this.userStore
-        .deleteUser()
-        .then(() => {
-          this.userStore.disconnect;
-          this.$router.replace("/login");
-          console.log("user deleted");
+        .then(async (res) => {
+          await this.userStore.resetData();
+          await new Promise((r) => setTimeout(r, 2500));
+          this.$forceUpdate();
         })
         .catch((err) => console.log(err));
+    },
+    async deleteSelf() {
+      console.log("deleting");
+      await this.userStore.deleteUser();
+      this.userStore.disconnect;
+      this.$router.replace("/login");
+      console.log("user deleted");
     },
   },
 };

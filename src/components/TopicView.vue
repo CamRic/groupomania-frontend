@@ -11,7 +11,10 @@
       <q-btn label="actualiser" @click="reloadPost" />
       <q-btn
         class="q-ml-auto"
-        v-if="topicStore.getTopicCreatorId === userStore.getUserId"
+        v-if="
+          topicStore.getTopicCreatorId === userStore.getUserId ||
+          userStore.getUserRole === 'admin'
+        "
         label="supprimer"
         @click="deleteTopic"
       />
@@ -24,6 +27,7 @@
         :createdAt="post.createdAt"
         :author_id="post.user_id"
         :post_id="post.post_id"
+        @deleted="reloadPage"
       />
     </div>
 
@@ -37,6 +41,8 @@ import { useUserStore } from "src/pinia/user.store";
 import ReplyCard from "src/components/ReplyCard.vue";
 import { useTopicStore } from "src/pinia/topic.store";
 import TopicCard from "./TopicCard.vue";
+import { api } from "src/boot/axios";
+import { Cookies } from "quasar";
 
 export default {
   name: "TopicView",
@@ -65,6 +71,12 @@ export default {
       await new Promise((r) => setTimeout(r, 2500));
       this.reloadPost();
       console.log("tip");
+    },
+    async deleteTopic() {
+      await api.delete("/topic/" + this.topicId, {
+        headers: { Authorization: "Bearer: " + Cookies.get("token") },
+      });
+      this.$router.replace("/");
     },
   },
   watch: {

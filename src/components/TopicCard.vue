@@ -6,10 +6,10 @@
       <p class="q-my-sm q-pl-lg">Le {{ creationDate }}</p>
     </div>
     <q-separator />
-    <!-- <div class="topicBody-qcard__img">
-
+    <div class="topicBody-qcard__img">
+      <img :src="imageUrl" />
     </div>
-    <q-separator /> -->
+    <q-separator />
     <div class="topicBody-qcard__body q-my-md">
       {{ body }}
     </div>
@@ -32,6 +32,7 @@ export default {
     authorId: String,
     creationDate: String,
     body: String,
+    imageUrl: String,
   },
 };
 </script>

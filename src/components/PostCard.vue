@@ -10,13 +10,18 @@
     <q-separator />
     <p class="q-my-sm flex justify-end">{{ createdAt }}</p>
     <q-icon
-      v-if="userStore.getUserId === author_id"
+      v-if="
+        userStore.getUserId === author_id || userStore.getUserRole === 'admin'
+      "
       class="fa-solid fa-trash-can"
+      @click="deleteSelf"
     />
   </q-card>
 </template>
 <script>
 import { useUserStore } from "src/pinia/user.store";
+import { api } from "src/boot/axios";
+import { Cookies } from "quasar";
 export default {
   name: "PostCard",
 
@@ -33,6 +38,16 @@ export default {
     author_id: String,
     body: String,
     createdAt: String,
+  },
+
+  methods: {
+    async deleteSelf(data) {
+      console.log(this.post_id);
+      await api.delete("/post/" + this.post_id, {
+        headers: { Authorization: "Bearer: " + Cookies.get("token") },
+      });
+      this.$emit("deleted");
+    },
   },
 };
 </script>

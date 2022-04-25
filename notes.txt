@@ -6,8 +6,14 @@ date topiclist
 
 ajouter loading spinner avant rechargement de page quand post
 
-! images
-! admin
-! popup
-! css
-! dates
+! images => voir p6
+! admin => visu
+! popup => ajout post, suppr post, suppr el panneau admin, connexion, inscription, deconnexion,
+! nav => ajout page admin + ameliorer visu
+
+! auth => ajout auth routes
+
+! loading spinners => ajout post, suppr post, suppr el panneau admin,
+
+! css - responsive
+! dates => reformater dates

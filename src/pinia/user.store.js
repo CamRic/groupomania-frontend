@@ -31,6 +31,9 @@ export const useUserStore = defineStore("user_store", {
     isLogged(state) {
       return state.loggedIn;
     },
+    getUseRole(state) {
+      return state.user_access_level;
+    },
   },
 
   actions: {
@@ -39,7 +42,6 @@ export const useUserStore = defineStore("user_store", {
         email: inEmail,
         password: inPassword,
       });
-      console.log(response);
       var d = new Date();
       d.setTime(d.getTime() + 60 * 60 * 1000);
       document.cookie =
@@ -60,7 +62,6 @@ export const useUserStore = defineStore("user_store", {
         },
       })
         .then((res) => {
-          console.log(res);
           this.loggedIn = true;
           this.user_email = response.data.user_email;
           this.user_id = response.data.user_id;
@@ -80,9 +81,21 @@ export const useUserStore = defineStore("user_store", {
       console.log("sending request...");
       console.log(this.user_id);
       api
-        .delete("http://localhost:3000/api/user/" + this.user_id)
-        .then((res) => res.status(204).json({ message: "user deleted" }))
-        .catch((err) => res.status(401).json({ error: err }));
+        .delete("http://localhost:3000/api/user/" + this.user_id, {
+          headers: { Authorization: "Bearer: " + Cookies.get("token") },
+        })
+        .then((row) => console.log("user deleted " + row))
+        .catch((err) => console.log(err));
+    },
+    async resetData(data) {
+      api
+        .get("/user/" + this.user_id)
+        .then((user) => {
+          this.user_email = user.data.user.email;
+          this.user_first_name = user.data.user.first_name;
+          this.user_last_name = user.data.user.last_name;
+        })
+        .catch((err) => console.log(err));
     },
   },
 });
