@@ -3,7 +3,12 @@
     <q-form @submit="onSubmit">
       <q-input label="Titre" type="text" v-model="topicTitle" borderless />
       <q-separator />
-      <input type="file" @change="handleFileUpload($event)" ref="file" />
+      <input
+        type="file"
+        @change="handleFileUpload($event)"
+        ref="file"
+        name="file"
+      />
       <q-separator />
       <q-input
         class="q-mb-md"
@@ -48,10 +53,10 @@ export default {
         return;
       }
       let formData = new FormData();
-      formData.append("file", this.file);
       formData.append("topicBody", this.topicBody);
       formData.append("title", this.topicTitle);
       formData.append("user_id", this.userStore.user_id);
+      formData.append("file", this.file);
 
       api
         .post("http://localhost:3000/api/topic", formData, {
