@@ -78,14 +78,54 @@ export const useUserStore = defineStore("user_store", {
       this.user_last_name = "";
     },
     async deleteUser(data) {
-      console.log("sending request...");
-      console.log(this.user_id);
-      api
-        .delete("http://localhost:3000/api/user/" + this.user_id, {
+      await api
+        .delete("/post/user/" + this.user_id, {
           headers: { Authorization: "Bearer: " + Cookies.get("token") },
         })
-        .then((row) => console.log("user deleted " + row))
+        .then((res) => {
+          console.log(res);
+          console.log("users post deleted");
+          api
+            .delete("/topic/user/" + this.user_id, {
+              headers: { Authorization: "Bearer: " + Cookies.get("token") },
+            })
+            .then((res2) => {
+              console.log(res2);
+              console.log("user topics deleted");
+              api
+                .delete("http://localhost:3000/api/user/" + this.user_id, {
+                  headers: { Authorization: "Bearer: " + Cookies.get("token") },
+                })
+                .then((row) => console.log("user deleted " + row))
+                .catch((err) => console.log(err));
+            })
+            .catch((err) => console.log(err));
+        })
         .catch((err) => console.log(err));
+      console.log("finished deleting user data");
+      this.loggedIn = false;
+
+      // deleting users posts
+      // const delPostsProm = await api.delete("/post/user/" + this.user_id, {
+      //   headers: { Authorization: "Bearer: " + Cookies.get("token") },
+      // });
+      // console.log(delPostsProm);
+      // console.log("users posts deleted");
+
+      // // deleting users topics
+      // const delTopicsProm = await api.delete("/topic/user/" + this.user_id, {
+      //   headers: { Authorization: "Bearer: " + Cookies.get("token") },
+      // });
+      // console.log("users topics deleted");
+      // console.log(delTopicsProm);
+
+      // // deleting user
+      // api
+      //   .delete("http://localhost:3000/api/user/" + this.user_id, {
+      //     headers: { Authorization: "Bearer: " + Cookies.get("token") },
+      //   })
+      //   .then((row) => console.log("user deleted " + row))
+      //   .catch((err) => console.log(err));
     },
     async resetData(data) {
       api

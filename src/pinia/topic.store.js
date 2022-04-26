@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { api } from "src/boot/axios";
+import { Cookies } from "quasar";
 
 export const useTopicStore = defineStore("topic_store", {
   state: () => ({
@@ -40,45 +41,32 @@ export const useTopicStore = defineStore("topic_store", {
     getTopicPostList(data) {
       return this.topicPosts;
     },
+    getTopicImageUrl(data) {
+      return this.topicObject.imageUrl;
+    },
   },
 
   actions: {
-    reloadTopicPostsList(topic_id) {
-      this.topicPosts = [];
+    reloadTopicPostsList(topic_id, data) {
+      this.topicPosts = null;
       api
-        .get("/topic/" + topic_id)
-        .then((topic) => {
-          console.log(topic);
-          const topicList = topic.data.topic.replies.replies;
-          console.log(topicList);
-          for (let i = 0; i < topicList.length; i++) {
+        .get("/post/topic/" + topic_id)
+        .then((res) => {
+          this.topicPosts = res.data.posts;
+          for (let post of this.topicPosts) {
             api
-              .get("/post/" + topicList[i])
-              .then((post) => {
-                console.log(post);
-                var postData = {};
-                postData["body"] = post.data.post.body;
-                postData["createdAt"] = post.data.post.createdAt;
-                postData["user_id"] = post.data.post.user_id;
-                postData["post_id"] = post.data.post.post_id;
-                api
-                  .get("/user/" + postData.user_id)
-                  .then((user) => {
-                    postData["author"] =
-                      user.data.user.first_name +
-                      " " +
-                      user.data.user.last_name;
-                    this.topicPosts.push(postData);
-                    console.log(this.topicPosts);
-                  })
-                  .catch((err) => console.log(err));
+              .get("/user/" + post.user_id)
+              .then((user) => {
+                console.log(user);
+                post["author"] =
+                  user.data.user.first_name + " " + user.data.user.last_name;
               })
               .catch((err) => console.log(err));
           }
         })
         .catch((err) => console.log(err));
     },
-    async retrieveTopicData(topic_id) {
+    async retrieveTopicData(topic_id, data) {
       this.isLoaded = false;
       this.topicObject = {};
       this.creatorFullName = "";
@@ -87,8 +75,8 @@ export const useTopicStore = defineStore("topic_store", {
       const response = await api.get(
         "http://localhost:3000/api/topic/" + topic_id
       );
-
-      this.topicObject = response.data.topic;
+      let obj = response.data.topic;
+      this.topicObject = { ...obj };
 
       // getting user name from db
       const response2 = await api.get(
@@ -98,33 +86,66 @@ export const useTopicStore = defineStore("topic_store", {
         response2.data.user.first_name + " " + response2.data.user.last_name;
 
       // getting posts datas
-      const topicReplies = this.topicObject.replies.replies;
-      for (var i = 0; i < topicReplies.length; i++) {
-        await api
-          .get("http://localhost:3000/api/post/" + topicReplies[i])
-          .then(async (res) => {
-            var postData = {};
-            postData["body"] = res.data.post.body;
-            postData["createdAt"] = res.data.post.createdAt;
-            postData["user_id"] = res.data.post.user_id;
-            postData["post_id"] = res.data.post.post_id;
-            var creatorId = res.data.post.user_id;
-            // getting post creator name
-            await api
-              .get("http://localhost:3000/api/user/" + creatorId)
-              .then((res1) => {
-                postData["author"] =
-                  res1.data.user.first_name + " " + res1.data.user.last_name;
-                this.topicPosts.push(postData);
-                console.log(this.topicPosts);
+      api
+        .get("/post/topic/" + topic_id)
+        .then((res) => {
+          this.topicPosts = res.data.posts;
+          for (let post of this.topicPosts) {
+            api
+              .get("/user/" + post.user_id)
+              .then((user) => {
+                console.log(user);
+                post["author"] =
+                  user.data.user.first_name + " " + user.data.user.last_name;
               })
               .catch((err) => console.log(err));
-          })
-          .catch((err) => console.log(err));
-      }
+          }
+        })
+        .catch((err) => console.log(err));
+
+      // const topicReplies = this.topicObject.replies.replies;
+      // for (var i = 0; i < topicReplies.length; i++) {
+      //   await api
+      //     .get("http://localhost:3000/api/post/" + topicReplies[i])
+      //     .then(async (res) => {
+      //       var postData = {};
+      //       postData["body"] = res.data.post.body;
+      //       postData["createdAt"] = res.data.post.createdAt;
+      //       postData["user_id"] = res.data.post.user_id;
+      //       postData["post_id"] = res.data.post.post_id;
+      //       var creatorId = res.data.post.user_id;
+      //       // getting post creator name
+      //       await api
+      //         .get("http://localhost:3000/api/user/" + creatorId)
+      //         .then((res1) => {
+      //           postData["author"] =
+      //             res1.data.user.first_name + " " + res1.data.user.last_name;
+      //           this.topicPosts.push(postData);
+      //           console.log(this.topicPosts);
+      //         })
+      //         .catch((err) => console.log(err));
+      //     })
+      //     .catch((err) => console.log(err));
+      // }
 
       this.isLoaded = true;
       return this.topicObject;
+    },
+    async deleteTopic(topic_id) {
+      api
+        .delete("/post/topic/" + topic_id, {
+          headers: { Authorization: "Bearer: " + Cookies.get("token") },
+        })
+        .then((res) => {
+          console.log(res);
+          console.log("aaposts deleted");
+          api
+            .delete("/topic/" + topic_id, {
+              headers: { Authorization: "Bearer: " + Cookies.get("token") },
+            })
+            .then((res1) => console.log("topic deleted"))
+            .catch((err) => console.log(err));
+        });
     },
   },
 });

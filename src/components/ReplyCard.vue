@@ -55,28 +55,7 @@ export default {
           user_id: this.getUserId,
           body: this.replyBody,
         })
-        .then(async (res) => {
-          var reqUrl =
-            "http://localhost:3000/api/topic/" +
-            this.topicId +
-            "/post/" +
-            res.data.newPost.post_id;
-
-          const topicRes = await api.get(
-            "http://localhost:3000/api/topic/" + this.topicId
-          );
-          console.log(topicRes);
-          var repliesArray = topicRes.data.topic.replies.replies;
-          repliesArray.push(res.data.newPost.post_id);
-          console.log(repliesArray);
-          const repliesObject = { replies: repliesArray };
-          const prom = await api.put(
-            "http://localhost:3000/api/topic/" + this.topicId,
-            {
-              replies: repliesObject,
-            }
-          );
-          console.log(prom);
+        .then((res) => {
           this.$emit("emitted");
         })
         .catch((err) => console.log(err));

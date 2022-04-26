@@ -6,7 +6,7 @@ date topiclist
 
 ajouter loading spinner avant rechargement de page quand post
 
-! images => voir p6
+! images => filtres + q-comp
 ! admin => visu
 ! popup => ajout post, suppr post, suppr el panneau admin, connexion, inscription, deconnexion,
 ! nav => ajout page admin + ameliorer visu

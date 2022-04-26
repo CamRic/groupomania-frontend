@@ -6,6 +6,7 @@
       :title="topicStore.getTopicTitle"
       :authorId="topicStore.getTopicCreatorId"
       :creationDate="topicStore.getTopicCreationDate"
+      :imageUrl="topicStore.getTopicImageUrl"
     />
     <div class="flex justify-start">
       <q-btn label="actualiser" @click="reloadPost" />
@@ -73,9 +74,8 @@ export default {
       console.log("tip");
     },
     async deleteTopic() {
-      await api.delete("/topic/" + this.topicId, {
-        headers: { Authorization: "Bearer: " + Cookies.get("token") },
-      });
+      await this.topicStore.deleteTopic(this.topicId);
+      await new Promise((r) => setTimeout(r, 2500));
       this.$router.replace("/");
     },
   },
