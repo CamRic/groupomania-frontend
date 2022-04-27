@@ -26,16 +26,19 @@
 <script>
 import { api } from "src/boot/axios";
 import { useUserStore } from "src/pinia/user.store";
+import { useTopicStore } from "src/pinia/topic.store";
 import { Cookies, useQuasar } from "quasar";
 
 export default {
   name: "CreateTopic",
 
   data() {
+    const topicStore = useTopicStore();
     const userStore = useUserStore();
     const $q = useQuasar;
     var image = null;
     return {
+      topicStore,
       $q,
       file: "",
       image,
@@ -57,9 +60,7 @@ export default {
       formData.append("topicBody", this.topicBody);
       formData.append("title", this.topicTitle);
       formData.append("user_id", this.userStore.user_id);
-      if (this.file.length > 0) {
-        formData.append("file", this.file);
-      }
+      formData.append("file", this.file);
 
       api
         .post("http://localhost:3000/api/topic", formData, {
@@ -71,6 +72,7 @@ export default {
         .then(async (topic) => {
           console.log("new topic created!");
           console.log(topic);
+          this.topicStore.retrieveTopicData(topic.data.topic.topic_id);
           this.$q.notify({
             spinner: true,
             message: "Création du sujet...",

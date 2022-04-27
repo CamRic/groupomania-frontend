@@ -4,13 +4,16 @@ ext: emmet, snippet ...
 
 
 ! images => filtres + q-comp
+
 ! admin => visu
 ! popup => probleme
 ! nav => ajout page admin + ameliorer visu
 
 (! modifier post/topic)
 
+! - message count topic list
 
+! auth middleware
 
 ! hovered el
 

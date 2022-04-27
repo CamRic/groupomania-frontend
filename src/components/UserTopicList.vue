@@ -13,6 +13,7 @@
 import { useUserStore } from "../pinia/user.store";
 import { useTopicStore } from "src/pinia/topic.store";
 import { api } from "src/boot/axios";
+import { Cookies } from "quasar";
 
 const columns = [
   {

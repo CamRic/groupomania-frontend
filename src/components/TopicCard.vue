@@ -6,8 +6,11 @@
       <p class="q-my-sm q-pl-lg">Le {{ creationDate }}</p>
     </div>
     <q-separator />
-    <div class="topicBody-qcard__img" v-if="imageUrl">
-      <img :src="imageUrl" />
+    <div
+      class="topicBody-qcard__img flex center justify-center"
+      v-if="imageUrl"
+    >
+      <img :src="imageUrl" class="topic-img" />
     </div>
     <q-separator />
     <div class="topicBody-qcard__body q-my-md">
@@ -36,4 +39,8 @@ export default {
   },
 };
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.topic-img {
+  max-width: 100%;
+}
+</style>

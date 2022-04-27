@@ -42,7 +42,7 @@ import { useUserStore } from "src/pinia/user.store";
 import ReplyCard from "src/components/ReplyCard.vue";
 import { useTopicStore } from "src/pinia/topic.store";
 import TopicCard from "./TopicCard.vue";
-import { Cookies } from "quasar";
+import { Cookies, Notify, useQuasar } from "quasar";
 
 export default {
   name: "TopicView",
@@ -54,11 +54,13 @@ export default {
   },
 
   data() {
+    const $q = useQuasar();
     const topicStore = useTopicStore();
     const userStore = useUserStore();
     console.log(userStore.getUseRole);
     const userRole = Cookies.get("user_role");
     return {
+      $q,
       userRole,
       userStore,
       topicStore,
@@ -77,6 +79,11 @@ export default {
     },
     async deleteTopic() {
       await this.topicStore.deleteTopic(this.topicId);
+      this.$q.notify({
+        spinner: true,
+        message: "Suppression du topic...",
+        timeout: 2500,
+      });
       await new Promise((r) => setTimeout(r, 2500));
       this.$router.replace("/");
     },
