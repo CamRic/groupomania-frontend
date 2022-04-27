@@ -55,12 +55,13 @@
 <script>
 import { useUserStore } from "src/pinia/user.store";
 import { api } from "src/boot/axios";
-import { Cookies } from "quasar";
+import { Cookies, Notify, useQuasar } from "quasar";
 
 export default {
   name: "UserCard",
 
   data() {
+    const $q = useQuasar();
     const userStore = useUserStore();
     var emailInput = "";
     var firstNameInput = "";
@@ -68,6 +69,7 @@ export default {
     var passwordInput = "";
     var newPasswordInput = "";
     return {
+      $q,
       newPasswordInput,
       userStore,
       emailInput,
@@ -86,12 +88,16 @@ export default {
   methods: {
     onSubmit(e) {
       api
-        .put("/user/" + this.userStore.getUserId, {
-          email: this.emailInput,
-          first_name: this.firstNameInput,
-          last_name: this.lastNameInput,
-          password: this.passwordInput,
-        })
+        .put(
+          "/user/" + this.userStore.getUserId,
+          {
+            email: this.emailInput,
+            first_name: this.firstNameInput,
+            last_name: this.lastNameInput,
+            password: this.passwordInput,
+          },
+          { headers: { Authorization: "Bearer: " + Cookies.get("token") } }
+        )
         .then(async (res) => {
           await this.userStore.resetData();
           await new Promise((r) => setTimeout(r, 2500));
@@ -102,6 +108,10 @@ export default {
     async deleteSelf() {
       console.log("deleting");
       await this.userStore.deleteUser();
+      this.$q.notify({
+        message: "Compte supprimé!",
+        timeout: 2500,
+      });
       this.userStore.disconnect;
       this.$router.replace("/login");
       console.log("user deleted");

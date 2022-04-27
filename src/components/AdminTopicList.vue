@@ -55,7 +55,9 @@ export default {
   },
   created(data) {
     api
-      .get("/topic")
+      .get("/topic", {
+        headers: { Authorization: "Bearer: " + Cookies.get("token") },
+      })
       .then((topics) => {
         console.log(topics);
         this.topicList = topics.data.topics;
@@ -81,7 +83,9 @@ export default {
   methods: {
     async deleteTopic(data) {
       for (let topic of this.selected) {
-        const top = await api.delete("/topic/" + topic.topic_id);
+        const top = await api.delete("/topic/" + topic.topic_id, {
+          headers: { Authorization: "Bearer: " + Cookies.get("token") },
+        });
       }
       this.refreshData();
     },
@@ -90,14 +94,18 @@ export default {
       this.topicList = [];
       console.log(this.topicList);
       api
-        .get("/topic")
+        .get("/topic", {
+          headers: { Authorization: "Bearer: " + Cookies.get("token") },
+        })
         .then((topics) => {
           console.log(topics);
           this.topicList = topics.data.topics;
           for (let topic of this.topicList) {
             console.log(topic);
             api
-              .get("/user/" + topic.user_id)
+              .get("/user/" + topic.user_id, {
+                headers: { Authorization: "Bearer: " + Cookies.get("token") },
+              })
               .then((user) => {
                 console.log(user);
                 this.rows.push({

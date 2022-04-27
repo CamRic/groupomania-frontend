@@ -33,15 +33,18 @@
 
 <script>
 import { useUserStore } from "src/pinia/user.store";
-import { Cookies } from "quasar";
+import { Cookies, useQuasar } from "quasar";
+import { Notify } from "quasar";
 
 export default {
   name: "ProfilNav",
 
   data() {
+    const $q = useQuasar();
     const userStore = useUserStore();
     const userRole = Cookies.get("user_role");
     return {
+      $q,
       userRole,
       userStore,
     };
@@ -60,6 +63,10 @@ export default {
   methods: {
     disconnectSelf() {
       this.userStore.disconnect();
+      this.$q.notify({
+        message: "Déconnecté!",
+        timeout: 2500,
+      });
       this.$router.replace({ path: "/login" });
     },
   },

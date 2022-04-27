@@ -31,6 +31,7 @@
 
 <script>
 import { useUserStore } from "src/pinia/user.store.js";
+import { Notify, useQuasar } from "quasar";
 
 export default {
   name: "LoginForm",
@@ -38,8 +39,10 @@ export default {
   components: {},
 
   data() {
+    const $q = useQuasar();
     const userStore = useUserStore();
     return {
+      $q,
       userStore,
       password: "",
       email: "",
@@ -53,7 +56,12 @@ export default {
         return;
       }
       if (await this.userStore.userLogin(this.email, this.password)) {
-        //this.$router.push({ path: "/" });
+        this.$router.push({ path: "/" });
+        this.$q.notify({
+          message: "Bienvenue!",
+          timeout: 2500,
+          position: "top",
+        });
       } else {
         console.log("cant connect");
       }

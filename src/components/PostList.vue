@@ -33,6 +33,7 @@ const columns = [
 ];
 
 import { api } from "src/boot/axios";
+import { Cookies } from "quasar";
 
 export default {
   name: "PostList",
@@ -49,7 +50,9 @@ export default {
   },
   created(data) {
     api
-      .get("/post")
+      .get("/post", {
+        headers: { Authorization: "Bearer: " + Cookies.get("token") },
+      })
       .then((posts) => {
         console.log(posts);
         this.postList = posts.data.posts;

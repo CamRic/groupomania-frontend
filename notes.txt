@@ -2,18 +2,17 @@
 
 ext: emmet, snippet ...
 
-date topiclist
 
-ajouter loading spinner avant rechargement de page quand post
-
-! images => filtres + q-comp, topic sans image
+! images => filtres + q-comp
 ! admin => visu
-! popup => ajout post, suppr post, suppr el panneau admin, connexion, inscription, deconnexion,
+! popup => probleme
 ! nav => ajout page admin + ameliorer visu
 
-! auth => ajout auth routes
+(! modifier post/topic)
 
-! loading spinners => ajout post, suppr post, suppr el panneau admin,
+
+
+! hovered el
 
 ! css - responsive
 ! dates => reformater dates

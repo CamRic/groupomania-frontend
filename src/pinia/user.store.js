@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { api } from "src/boot/axios";
-import { Cookies } from "quasar";
+import { Cookies, Notify } from "quasar";
 
 export const useUserStore = defineStore("user_store", {
   state: () => ({
@@ -103,7 +103,13 @@ export const useUserStore = defineStore("user_store", {
                 .delete("http://localhost:3000/api/user/" + this.user_id, {
                   headers: { Authorization: "Bearer: " + Cookies.get("token") },
                 })
-                .then((row) => console.log("user deleted " + row))
+                .then((row) => {
+                  // Notify.create({
+                  //   message: "Compte Supprimé!",
+                  //   timeout: 2500,
+                  // });
+                  console.log("user deleted " + row);
+                })
                 .catch((err) => console.log(err));
             })
             .catch((err) => console.log(err));
@@ -114,7 +120,9 @@ export const useUserStore = defineStore("user_store", {
     },
     async resetData(data) {
       api
-        .get("/user/" + this.user_id)
+        .get("/user/" + this.user_id, {
+          headers: { Authorization: "Bearer: " + Cookies.get("token") },
+        })
         .then((user) => {
           this.user_email = user.data.user.email;
           this.user_first_name = user.data.user.first_name;

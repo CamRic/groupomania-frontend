@@ -50,12 +50,16 @@ export const useTopicStore = defineStore("topic_store", {
     reloadTopicPostsList(topic_id, data) {
       this.topicPosts = null;
       api
-        .get("/post/topic/" + topic_id)
+        .get("/post/topic/" + topic_id, {
+          headers: { Authorization: "Bearer: " + Cookies.get("token") },
+        })
         .then((res) => {
           this.topicPosts = res.data.posts;
           for (let post of this.topicPosts) {
             api
-              .get("/user/" + post.user_id)
+              .get("/user/" + post.user_id, {
+                headers: { Authorization: "Bearer: " + Cookies.get("token") },
+              })
               .then((user) => {
                 console.log(user);
                 post["author"] =
@@ -73,26 +77,36 @@ export const useTopicStore = defineStore("topic_store", {
       this.topicPosts = [];
       // getting topic data from db
       const response = await api.get(
-        "http://localhost:3000/api/topic/" + topic_id
+        "http://localhost:3000/api/topic/" + topic_id,
+        {
+          headers: { Authorization: "Bearer: " + Cookies.get("token") },
+        }
       );
       let obj = response.data.topic;
       this.topicObject = { ...obj };
 
       // getting user name from db
       const response2 = await api.get(
-        "http://localhost:3000/api/user/" + this.topicObject.user_id
+        "http://localhost:3000/api/user/" + this.topicObject.user_id,
+        {
+          headers: { Authorization: "Bearer: " + Cookies.get("token") },
+        }
       );
       this.creatorFullName =
         response2.data.user.first_name + " " + response2.data.user.last_name;
 
       // getting posts datas
       api
-        .get("/post/topic/" + topic_id)
+        .get("/post/topic/" + topic_id, {
+          headers: { Authorization: "Bearer: " + Cookies.get("token") },
+        })
         .then((res) => {
           this.topicPosts = res.data.posts;
           for (let post of this.topicPosts) {
             api
-              .get("/user/" + post.user_id)
+              .get("/user/" + post.user_id, {
+                headers: { Authorization: "Bearer: " + Cookies.get("token") },
+              })
               .then((user) => {
                 console.log(user);
                 post["author"] =
@@ -102,31 +116,6 @@ export const useTopicStore = defineStore("topic_store", {
           }
         })
         .catch((err) => console.log(err));
-
-      // const topicReplies = this.topicObject.replies.replies;
-      // for (var i = 0; i < topicReplies.length; i++) {
-      //   await api
-      //     .get("http://localhost:3000/api/post/" + topicReplies[i])
-      //     .then(async (res) => {
-      //       var postData = {};
-      //       postData["body"] = res.data.post.body;
-      //       postData["createdAt"] = res.data.post.createdAt;
-      //       postData["user_id"] = res.data.post.user_id;
-      //       postData["post_id"] = res.data.post.post_id;
-      //       var creatorId = res.data.post.user_id;
-      //       // getting post creator name
-      //       await api
-      //         .get("http://localhost:3000/api/user/" + creatorId)
-      //         .then((res1) => {
-      //           postData["author"] =
-      //             res1.data.user.first_name + " " + res1.data.user.last_name;
-      //           this.topicPosts.push(postData);
-      //           console.log(this.topicPosts);
-      //         })
-      //         .catch((err) => console.log(err));
-      //     })
-      //     .catch((err) => console.log(err));
-      // }
 
       this.isLoaded = true;
       return this.topicObject;

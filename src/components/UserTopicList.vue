@@ -64,7 +64,9 @@ export default {
 
   created(data) {
     api
-      .get("/topic/user/" + this.userStore.getUserId)
+      .get("/topic/user/" + this.userStore.getUserId, {
+        headers: { Authorization: "Bearer: " + Cookies.get("token") },
+      })
       .then((topics) => {
         this.topicList = topics.data.topics;
         for (let i = 0; i < this.topicList.length; i++) {

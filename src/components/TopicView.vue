@@ -42,7 +42,6 @@ import { useUserStore } from "src/pinia/user.store";
 import ReplyCard from "src/components/ReplyCard.vue";
 import { useTopicStore } from "src/pinia/topic.store";
 import TopicCard from "./TopicCard.vue";
-import { api } from "src/boot/axios";
 import { Cookies } from "quasar";
 
 export default {

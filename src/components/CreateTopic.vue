@@ -26,7 +26,7 @@
 <script>
 import { api } from "src/boot/axios";
 import { useUserStore } from "src/pinia/user.store";
-import { useQuasar } from "quasar";
+import { Cookies, useQuasar } from "quasar";
 
 export default {
   name: "CreateTopic",
@@ -52,6 +52,7 @@ export default {
         console.log("invalid input(s)");
         return;
       }
+
       let formData = new FormData();
       formData.append("topicBody", this.topicBody);
       formData.append("title", this.topicTitle);
@@ -62,12 +63,21 @@ export default {
 
       api
         .post("http://localhost:3000/api/topic", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: "Bearer: " + Cookies.get("token"),
+          },
         })
-        .then((topic) => {
+        .then(async (topic) => {
           console.log("new topic created!");
           console.log(topic);
-          this.$router.replace("/");
+          this.$q.notify({
+            spinner: true,
+            message: "Création du sujet...",
+            timeout: 1000,
+          });
+          await new Promise((r) => setTimeout(r, 1500));
+          this.$router.replace("/topic/" + topic.data.topic.topic_id);
         })
         .catch(() => console.log("error creating topic"));
     },

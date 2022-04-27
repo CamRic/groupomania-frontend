@@ -21,13 +21,17 @@
 <script>
 import { useUserStore } from "src/pinia/user.store";
 import { api } from "src/boot/axios";
-import { Cookies } from "quasar";
+import { Cookies, useQuasar } from "quasar";
+import { Notify } from "quasar";
+
 export default {
   name: "PostCard",
 
   data() {
+    const $q = useQuasar();
     const userStore = useUserStore();
     return {
+      $q,
       userStore,
     };
   },
@@ -45,6 +49,11 @@ export default {
       console.log(this.post_id);
       await api.delete("/post/" + this.post_id, {
         headers: { Authorization: "Bearer: " + Cookies.get("token") },
+      });
+      this.$q.notify({
+        spinner: true,
+        message: "Suppression du message...",
+        timeout: 1500,
       });
       this.$emit("deleted");
     },

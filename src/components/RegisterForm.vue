@@ -49,13 +49,17 @@
 
 <script>
 import { api } from "src/boot/axios";
+import { Notify, useQuasar } from "quasar";
+
 export default {
   name: "RegisterForm",
 
   components: {},
 
   data() {
+    const $q = useQuasar();
     return {
+      $q,
       password: "",
       email: "",
       first_name: "",
@@ -92,6 +96,10 @@ export default {
         })
         .then((res) => {
           console.log(res);
+          this.$q.notify({
+            message: "Nouveau compte créé!",
+            timeout: 2500,
+          });
           this.$emit("switchForm");
         })
         .catch((err) => console.log(err));

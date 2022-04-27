@@ -63,7 +63,9 @@ export default {
 
   created(data) {
     api
-      .get("/user")
+      .get("/user", {
+        headers: { Authorization: "Bearer: " + Cookies.get("token") },
+      })
       .then((users) => {
         console.log(users);
         this.userList = users.data.users;
@@ -96,7 +98,9 @@ export default {
       this.rows = [];
       this.userList = [];
       api
-        .get("/user")
+        .get("/user", {
+          headers: { Authorization: "Bearer: " + Cookies.get("token") },
+        })
         .then((users) => {
           console.log(users);
           this.userList = users.data.users;

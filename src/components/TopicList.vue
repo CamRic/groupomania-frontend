@@ -14,6 +14,7 @@
 import { useUserStore } from "../pinia/user.store";
 import { useTopicStore } from "src/pinia/topic.store";
 import { api } from "src/boot/axios";
+import { Cookies } from "quasar";
 
 const columns = [
   {
@@ -65,13 +66,20 @@ export default {
 
   created(data) {
     api
-      .get("http://localhost:3000/api/topic")
+      .get("http://localhost:3000/api/topic", {
+        headers: { Authorization: "Bearer: " + Cookies.get("token") },
+      })
       .then((topics) => {
         this.topicList = topics.data.topics;
         for (let i = 0; i < this.topicList.length; i++) {
           console.log(this.topicList[i].user_id);
           api
-            .get("http://localhost:3000/api/user/" + this.topicList[i].user_id)
+            .get(
+              "http://localhost:3000/api/user/" + this.topicList[i].user_id,
+              {
+                headers: { Authorization: "Bearer: " + Cookies.get("token") },
+              }
+            )
             .then((user) => {
               console.log(user);
               var userName =
