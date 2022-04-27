@@ -53,7 +53,7 @@ export default {
         return;
       }
       if (await this.userStore.userLogin(this.email, this.password)) {
-        this.$router.push({ path: "/" });
+        //this.$router.push({ path: "/" });
       } else {
         console.log("cant connect");
       }

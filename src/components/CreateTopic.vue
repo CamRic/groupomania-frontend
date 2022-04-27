@@ -56,7 +56,9 @@ export default {
       formData.append("topicBody", this.topicBody);
       formData.append("title", this.topicTitle);
       formData.append("user_id", this.userStore.user_id);
-      formData.append("file", this.file);
+      if (this.file.length > 0) {
+        formData.append("file", this.file);
+      }
 
       api
         .post("http://localhost:3000/api/topic", formData, {

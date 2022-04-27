@@ -6,7 +6,7 @@
       <p class="q-my-sm q-pl-lg">Le {{ creationDate }}</p>
     </div>
     <q-separator />
-    <div class="topicBody-qcard__img">
+    <div class="topicBody-qcard__img" v-if="imageUrl">
       <img :src="imageUrl" />
     </div>
     <q-separator />

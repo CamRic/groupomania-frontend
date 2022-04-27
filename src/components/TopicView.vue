@@ -14,7 +14,7 @@
         class="q-ml-auto"
         v-if="
           topicStore.getTopicCreatorId === userStore.getUserId ||
-          userStore.getUserRole === 'admin'
+          this.userRole === 'admin'
         "
         label="supprimer"
         @click="deleteTopic"
@@ -57,7 +57,10 @@ export default {
   data() {
     const topicStore = useTopicStore();
     const userStore = useUserStore();
+    console.log(userStore.getUseRole);
+    const userRole = Cookies.get("user_role");
     return {
+      userRole,
       userStore,
       topicStore,
     };
