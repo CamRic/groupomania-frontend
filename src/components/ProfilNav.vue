@@ -1,32 +1,38 @@
 <template>
-  <q-btn-dropdown color="purple" :label="UserName" style="width: 150px">
+  <q-btn-dropdown
+    color="red-8"
+    :label="userStore.getFirstName"
+    class="header-dropdown"
+  >
     <q-list>
-      <q-item>
-        <q-item-section>
-          <q-item-label @click="this.$router.replace('/user')"
-            >Mon profil</q-item-label
-          >
-        </q-item-section>
-      </q-item>
-      <q-item>
-        <q-item-section>
-          <q-item-label @click="this.$router.replace('/newtopic')"
-            >Nouveau sujet</q-item-label
-          >
-        </q-item-section>
-      </q-item>
-      <q-item v-if="this.userRole === 'admin'">
-        <q-item-section>
-          <q-item-label @click="this.$router.replace('/admin')"
-            >Panneau Admin</q-item-label
-          >
-        </q-item-section>
-      </q-item>
-      <q-item>
-        <q-item-section>
-          <q-item-label @click="disconnectSelf">Deconnexion</q-item-label>
-        </q-item-section>
-      </q-item>
+      <router-link to="/user">
+        <q-item>
+          <q-item-section>
+            <q-item-label>Mon profil</q-item-label>
+          </q-item-section>
+        </q-item>
+      </router-link>
+      <router-link to="/newtopic">
+        <q-item>
+          <q-item-section>
+            <q-item-label>Nouveau sujet</q-item-label>
+          </q-item-section>
+        </q-item>
+      </router-link>
+      <router-link v-if="this.userRole === 'admin'" to="/admin">
+        <q-item>
+          <q-item-section>
+            <q-item-label>Admin</q-item-label>
+          </q-item-section>
+        </q-item>
+      </router-link>
+      <router-link to="/login">
+        <q-item>
+          <q-item-section>
+            <q-item-label @click="disconnectSelf">Deconnexion</q-item-label>
+          </q-item-section>
+        </q-item>
+      </router-link>
     </q-list>
   </q-btn-dropdown>
 </template>
@@ -67,8 +73,17 @@ export default {
         message: "Déconnecté!",
         timeout: 2500,
       });
-      this.$router.replace({ path: "/login" });
     },
   },
 };
 </script>
+
+<style lang="scss">
+.header-dropdown {
+  width: 150px;
+  @media (max-width: 426px) {
+    margin-bottom: 25px;
+    overflow: hidden;
+  }
+}
+</style>

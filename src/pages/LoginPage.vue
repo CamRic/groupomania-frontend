@@ -1,11 +1,11 @@
 <template>
   <q-page class="flex column flex-start content-center groupomania-qpage">
-    <div class="flex align-center">
+    <div class="flex align-center" style="width: 100%; max-width: 450px">
       <LoginForm v-if="loging" />
       <RegisterForm v-else @switchForm="changeForm" />
     </div>
-    <p v-if="loging" @click="changeForm">S'inscrire</p>
-    <p v-else @click="changeForm">Se connecter</p>
+    <a v-if="loging" @click="changeForm" class="q-ml-md">S'inscrire</a>
+    <a v-else @click="changeForm" class="q-ml-md">Se connecter</a>
   </q-page>
 </template>
 
@@ -32,7 +32,6 @@ export default defineComponent({
   methods: {
     changeForm(data) {
       this.loging = !this.loging;
-      console.log(this.loging);
     },
   },
 });

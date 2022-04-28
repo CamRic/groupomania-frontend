@@ -1,15 +1,21 @@
 <template>
-  <q-card class="create-topic-qcard q-my-md q-pa-md">
+  <q-card
+    class="create-topic-qcard q-my-md q-pa-lg align-center content-center"
+  >
     <q-form @submit="onSubmit">
-      <q-input label="Titre" type="text" v-model="topicTitle" borderless />
-      <q-separator />
-      <input
-        type="file"
-        @change="handleFileUpload($event)"
-        ref="file"
-        name="file"
+      <q-input label="Titre" type="text" v-model="topicTitle" class="q-mx-md" />
+      <q-file
+        class="q-mt-md"
+        style="max-width: 300px; fixed-height: 61px"
+        v-model="file"
+        rounded
+        standout
+        use-chips
+        label="Ajouter une image"
+        accept=".jpg, image/*"
+        @rejected="onRejected"
       />
-      <q-separator />
+      <q-separator class="q-mt-md" />
       <q-input
         class="q-mb-md"
         type="textarea"
@@ -52,7 +58,7 @@ export default {
     onSubmit(e) {
       // check user input
       if (this.topicTitle.length < 3 || this.topicBody.length < 3) {
-        console.log("invalid input(s)");
+        console.log("invalid input(s)"); // notif
         return;
       }
 
@@ -70,8 +76,7 @@ export default {
           },
         })
         .then(async (topic) => {
-          console.log("new topic created!");
-          console.log(topic);
+          console.log("new topic created: " + topic);
           this.topicStore.retrieveTopicData(topic.data.topic.topic_id);
           this.$q.notify({
             spinner: true,

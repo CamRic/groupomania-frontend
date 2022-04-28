@@ -1,10 +1,11 @@
 <template>
   <div>
-    <q-card>
-      <div class="list__header flex row justify-between">
+    <q-card style="width: 100%; max-width: 650px">
+      <div class="list__header flex row justify-between q-pa-md">
         <h6 class="q-my-sm">Liste des sujets</h6>
-        <q-btn label="supprimer" @click="deleteTopic" />
+        <q-btn label="supprimer" color="red" @click="deleteTopic" />
       </div>
+      <q-separator size="2px" />
       <q-table
         dense
         :rows="rows"
@@ -39,6 +40,7 @@ const columns = [
 ];
 
 import { api } from "src/boot/axios";
+import { Cookies } from "quasar";
 
 export default {
   name: "AdminTopicList",
@@ -56,17 +58,16 @@ export default {
   created(data) {
     api
       .get("/topic", {
-        headers: { Authorization: "Bearer: " + Cookies.get("token") },
+        headers: { Authorization: "Bearer " + Cookies.get("token") },
       })
       .then((topics) => {
-        console.log(topics);
         this.topicList = topics.data.topics;
         for (let topic of this.topicList) {
-          console.log(topic);
           api
-            .get("/user/" + topic.user_id)
+            .get("/user/" + topic.user_id, {
+              headers: { Authorization: "Bearer: " + Cookies.get("token") },
+            })
             .then((user) => {
-              console.log(user);
               this.rows.push({
                 sujet: topic.title,
                 author:
@@ -92,22 +93,18 @@ export default {
     async refreshData(data) {
       this.rows = [];
       this.topicList = [];
-      console.log(this.topicList);
       api
         .get("/topic", {
           headers: { Authorization: "Bearer: " + Cookies.get("token") },
         })
         .then((topics) => {
-          console.log(topics);
           this.topicList = topics.data.topics;
           for (let topic of this.topicList) {
-            console.log(topic);
             api
               .get("/user/" + topic.user_id, {
                 headers: { Authorization: "Bearer: " + Cookies.get("token") },
               })
               .then((user) => {
-                console.log(user);
                 this.rows.push({
                   sujet: topic.title,
                   author: user.data.first_name + " " + user.data.last_name,

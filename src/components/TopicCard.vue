@@ -2,21 +2,21 @@
   <q-card class="topicBody-qcard q-my-md q-pa-md">
     <div class="topicBody-qcard__header">
       <h5 class="q-my-sm q-pl-lg">Sujet: {{ title }}</h5>
-      <h6 class="q-my-sm q-pl-lg">Auteur:{{ author }}</h6>
+      <h6 class="q-my-sm q-pl-lg">Auteur: {{ author }}</h6>
       <p class="q-my-sm q-pl-lg">Le {{ creationDate }}</p>
     </div>
-    <q-separator />
+    <q-separator size="2px" />
     <div
       class="topicBody-qcard__img flex center justify-center"
       v-if="imageUrl"
     >
       <img :src="imageUrl" class="topic-img" />
+      <q-separator size="2px" />
     </div>
-    <q-separator />
-    <div class="topicBody-qcard__body q-my-md">
+    <div class="topicBody-qcard__body q-ma-md">
       {{ body }}
     </div>
-    <q-separator class="q-mb-md" />
+    <q-separator class="q-mb-md" size="2px" />
   </q-card>
 </template>
 <script>

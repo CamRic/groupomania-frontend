@@ -3,19 +3,24 @@
     <div class="post-qcard__header">
       <h6 class="q-my-sm q-pl-lg">{{ author }}</h6>
     </div>
-    <q-separator />
-    <div class="post-qcard__body q-mt-sm">
+    <q-separator size="2px" />
+    <div class="post-qcard__body q-ma-sm">
       {{ body }}
     </div>
-    <q-separator />
-    <p class="q-my-sm flex justify-end">{{ createdAt }}</p>
-    <q-icon
-      v-if="
-        userStore.getUserId === author_id || userStore.getUserRole === 'admin'
-      "
-      class="fa-solid fa-trash-can"
-      @click="deleteSelf"
-    />
+    <q-separator class="q-mt-md" size="2px" />
+    <div class="flex row justify-between items-center q-mx-md">
+      <p class="q-my-sm">
+        {{ createdAt.split("T").join(" ").substring(0, 19) }}
+      </p>
+      <q-icon
+        v-if="
+          userStore.getUserId === author_id || userStore.getUserRole === 'admin'
+        "
+        class="fa-solid fa-trash-can gr-icon"
+        color="red-4"
+        @click="deleteSelf"
+      />
+    </div>
   </q-card>
 </template>
 <script>
@@ -46,7 +51,6 @@ export default {
 
   methods: {
     async deleteSelf(data) {
-      console.log(this.post_id);
       await api.delete("/post/" + this.post_id, {
         headers: { Authorization: "Bearer: " + Cookies.get("token") },
       });
@@ -63,5 +67,8 @@ export default {
 <style lang="scss">
 .post-qcard {
   width: 100%;
+}
+.gr-icon:hover {
+  cursor: pointer;
 }
 </style>

@@ -84,6 +84,7 @@ export const useTopicStore = defineStore("topic_store", {
       );
       console.log(response.data.topic);
       let obj = response.data.topic;
+      obj["createdAt"] = obj["createdAt"].split("T").join(" ").substring(0, 19);
       this.topicObject = { ...obj };
       console.log(this.topicObject);
 

@@ -1,12 +1,12 @@
 <template>
-  <q-card class="flex flex-center column lognsign-card q-my-md q-pa-xl">
-    <h5 class="q-my-none">Inscription</h5>
-    <div class="form-container q-mt-xl">
+  <q-card class="flex column lognsign-card q-my-md q-pa-xl">
+    <h5 class="q-my-none q-mb-md">Inscription</h5>
+    <div class="form-container">
       <q-form @submit="onSubmit">
         <q-input
           class="q-mb-md"
           filled
-          style="background-color: #ffdede; border-radius: 10px 10px 10px 10px"
+          style="background-color: #ffffff; border-radius: 10px 10px 10px 10px"
           v-model="email"
           label="Votre adresse mail"
           type="email"
@@ -17,7 +17,7 @@
           class="q-mb-md"
           v-model="password"
           filled
-          style="background-color: #ffdede; border-radius: 10px 10px 10px 10px"
+          style="background-color: #ffffff; border-radius: 10px 10px 10px 10px"
           label="Votre mot de passe"
         />
 
@@ -26,7 +26,7 @@
           class="q-mb-md"
           v-model="first_name"
           filled
-          style="background-color: #ffdede; border-radius: 10px 10px 10px 10px"
+          style="background-color: #ffffff; border-radius: 10px 10px 10px 10px"
           label="Votre prénom"
         />
 
@@ -35,7 +35,7 @@
           class="q-mb-md"
           v-model="last_name"
           filled
-          style="background-color: #ffdede; border-radius: 10px 10px 10px 10px"
+          style="background-color: #ffffff; border-radius: 10px 10px 10px 10px"
           label="Votre nom"
         />
 
@@ -95,7 +95,6 @@ export default {
           last_name: this.last_name,
         })
         .then((res) => {
-          console.log(res);
           this.$q.notify({
             message: "Nouveau compte créé!",
             timeout: 2500,
@@ -110,14 +109,13 @@ export default {
 
 <style lang="scss">
 .lognsign-card {
-  //width: 60%;
+  max-width: 450px;
+  width: 100%;
   height: fit-content;
   background-color: $groupomania1;
   justify-content: center;
 }
 .form-container {
-  max-width: 600px;
-  min-width: 400px;
   height: auto;
   background-color: $groupomania1;
   > * {

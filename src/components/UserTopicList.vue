@@ -66,7 +66,7 @@ export default {
   created(data) {
     api
       .get("/topic/user/" + this.userStore.getUserId, {
-        headers: { Authorization: "Bearer: " + Cookies.get("token") },
+        headers: { Authorization: "Bearer " + Cookies.get("token") },
       })
       .then((topics) => {
         this.topicList = topics.data.topics;

@@ -106,7 +106,6 @@ export default {
         .catch((err) => console.log(err));
     },
     async deleteSelf() {
-      console.log("deleting");
       await this.userStore.deleteUser();
       this.$q.notify({
         message: "Compte supprimé!",

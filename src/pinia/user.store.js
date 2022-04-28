@@ -67,12 +67,13 @@ export const useUserStore = defineStore("user_store", {
       })
         .then((res) => {
           console.log(res);
+          console.log(response);
           this.loggedIn = true;
           this.user_email = response.data.user_email;
           this.user_id = response.data.user_id;
           this.user_first_name = response.data.user_firstName;
           this.user_last_name = response.data.user_lastName;
-          this.user_access_level = Cookies.get("user_role");
+          this.user_access_level = res.data.user_role;
         })
         .catch((err) => console.log(err));
     },
@@ -127,7 +128,7 @@ export const useUserStore = defineStore("user_store", {
           this.user_email = user.data.user.email;
           this.user_first_name = user.data.user.first_name;
           this.user_last_name = user.data.user.last_name;
-          this.user_access_level = Cookies.get("user_role");
+          this.user_access_level = response.data.user_role;
         })
         .catch((err) => console.log(err));
     },

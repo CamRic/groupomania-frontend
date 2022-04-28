@@ -54,7 +54,6 @@ export default {
         headers: { Authorization: "Bearer: " + Cookies.get("token") },
       })
       .then((posts) => {
-        console.log(posts);
         this.postList = posts.data.posts;
         for (let post of this.postList) {
           api

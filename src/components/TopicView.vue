@@ -57,7 +57,6 @@ export default {
     const $q = useQuasar();
     const topicStore = useTopicStore();
     const userStore = useUserStore();
-    console.log(userStore.getUseRole);
     const userRole = Cookies.get("user_role");
     return {
       $q,
@@ -72,10 +71,8 @@ export default {
       this.$forceUpdate;
     },
     async reloadPage() {
-      console.log("reloading...");
       await new Promise((r) => setTimeout(r, 2500));
       this.reloadPost();
-      console.log("tip");
     },
     async deleteTopic() {
       await this.topicStore.deleteTopic(this.topicId);

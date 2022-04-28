@@ -59,7 +59,8 @@ export default defineComponent({
 
 <style lang="scss">
 .index-components-container {
-  width: 60%;
+  max-width: 650px;
+  width: 100%;
 }
 .topic-carousel {
   background-color: $groupomania3;

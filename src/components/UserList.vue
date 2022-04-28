@@ -1,10 +1,11 @@
 <template>
   <div>
-    <q-card>
-      <div class="list__header flex row justify-between">
+    <q-card class="q-mb-md" style="width: 100%; max-width: 650px">
+      <div class="list__header flex row justify-between q-pa-md">
         <h6 class="q-my-sm">Liste des utilisateurs</h6>
-        <q-btn label="supprimer" @click="deleteUser" />
+        <q-btn label="supprimer" color="red" @click="deleteUser" />
       </div>
+      <q-separator size="2px" />
       <q-table
         dense
         :rows="rows"
@@ -67,10 +68,8 @@ export default {
         headers: { Authorization: "Bearer: " + Cookies.get("token") },
       })
       .then((users) => {
-        console.log(users);
         this.userList = users.data.users;
         for (let user of this.userList) {
-          console.log(user);
           this.rows.push({
             prenom: user.first_name,
             nom: user.last_name,
@@ -83,9 +82,6 @@ export default {
   },
 
   methods: {
-    rightClick(evt, row, index) {
-      console.log("clicked: " + evt, row, index);
-    },
     async deleteUser(data) {
       for (let user of this.selected) {
         await api.delete("/user/" + user.user_id, {
@@ -102,10 +98,8 @@ export default {
           headers: { Authorization: "Bearer: " + Cookies.get("token") },
         })
         .then((users) => {
-          console.log(users);
           this.userList = users.data.users;
           for (let user of this.userList) {
-            console.log(user);
             this.rows.push({
               prenom: user.first_name,
               nom: user.last_name,

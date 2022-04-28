@@ -32,18 +32,11 @@ const columns = [
     field: (row) => row.auteur,
   },
   {
-    name: "messages",
+    name: "date",
     required: true,
-    label: "Messages",
+    label: "Date",
     align: "left",
-    field: (row) => row.messages,
-  },
-  {
-    name: "dernier",
-    required: true,
-    label: "Dernier",
-    align: "left",
-    field: (row) => row.dernier,
+    field: (row) => row.date,
   },
 ];
 
@@ -72,7 +65,6 @@ export default {
       .then((topics) => {
         this.topicList = topics.data.topics;
         for (let i = 0; i < this.topicList.length; i++) {
-          console.log(this.topicList[i].user_id);
           api
             .get(
               "http://localhost:3000/api/user/" + this.topicList[i].user_id,
@@ -81,7 +73,6 @@ export default {
               }
             )
             .then((user) => {
-              console.log(user);
               var userName =
                 user.data.user["first_name"] +
                 " " +
@@ -90,7 +81,10 @@ export default {
                 sujet: this.topicList[i].title,
                 auteur: userName,
                 messages: this.topicList[i].replies.replies.length,
-                dernier: this.topicList[i].updatedAt,
+                date: this.topicList[i].createdAt
+                  .split("T")
+                  .join(" ")
+                  .substring(0, 19),
                 topic_id: this.topicList[i].topic_id,
               });
             })
