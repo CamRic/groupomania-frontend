@@ -51,15 +51,23 @@ export default {
 
   methods: {
     async deleteSelf(data) {
-      await api.delete("/post/" + this.post_id, {
-        headers: { Authorization: "Bearer: " + Cookies.get("token") },
-      });
-      this.$q.notify({
-        spinner: true,
-        message: "Suppression du message...",
-        timeout: 1500,
-      });
-      this.$emit("deleted");
+      this.$q
+        .dialog({
+          message: "Supprimer le message?",
+          cancel: true,
+          persistent: true,
+        })
+        .onOk(async () => {
+          await api.delete("/post/" + this.post_id, {
+            headers: { Authorization: "Bearer: " + Cookies.get("token") },
+          });
+          this.$q.notify({
+            spinner: true,
+            message: "Suppression du message...",
+            timeout: 1500,
+          });
+          this.$emit("deleted");
+        });
     },
   },
 };

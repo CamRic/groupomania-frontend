@@ -13,7 +13,6 @@
         use-chips
         label="Ajouter une image"
         accept=".jpg, image/*"
-        @rejected="onRejected"
       />
       <q-separator class="q-mt-md" />
       <q-input
@@ -42,12 +41,11 @@ export default {
     const topicStore = useTopicStore();
     const userStore = useUserStore();
     const $q = useQuasar;
-    var image = null;
+    var file = null;
     return {
       topicStore,
       $q,
-      file: "",
-      image,
+      file,
       topicTitle: "",
       topicBody: "",
       userStore,

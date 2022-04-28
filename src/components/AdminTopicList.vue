@@ -40,15 +40,18 @@ const columns = [
 ];
 
 import { api } from "src/boot/axios";
-import { Cookies } from "quasar";
+import { Cookies, useQuasar } from "quasar";
+import { Dialog } from "quasar";
 
 export default {
   name: "AdminTopicList",
 
   data() {
+    const $q = useQuasar;
     var topicList = [];
     var rows = [];
     return {
+      $q,
       topicList,
       selected: [],
       columns,
@@ -83,12 +86,21 @@ export default {
 
   methods: {
     async deleteTopic(data) {
-      for (let topic of this.selected) {
-        const top = await api.delete("/topic/" + topic.topic_id, {
-          headers: { Authorization: "Bearer: " + Cookies.get("token") },
+      this.$q
+        .dialog({
+          title: "Confirmation:",
+          message: "Supprimer les sujets sélectionnés?",
+          cancel: true,
+          persistent: true,
+        })
+        .onOk(async () => {
+          for (let topic of this.selected) {
+            const top = await api.delete("/topic/" + topic.topic_id, {
+              headers: { Authorization: "Bearer: " + Cookies.get("token") },
+            });
+          }
+          this.refreshData();
         });
-      }
-      this.refreshData();
     },
     async refreshData(data) {
       this.rows = [];

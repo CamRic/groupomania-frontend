@@ -1,15 +1,8 @@
-! status
-! CONFIRMATION
+! modif mdp
+! err login, topic creation, post creation
+! list bottom (dynamic scroll)
+(! auth)
+! modifier post/topic
+(! pp)
 
-
-ext: emmet, snippet ...
-
-
-! popup => probleme
-
-(! modifier post/topic)
-
-nettoyer code
-
-
-- PLAN PRESENTATION
+! PLAN PRESENTATION

@@ -75,14 +75,22 @@ export default {
       this.reloadPost();
     },
     async deleteTopic() {
-      await this.topicStore.deleteTopic(this.topicId);
-      this.$q.notify({
-        spinner: true,
-        message: "Suppression du topic...",
-        timeout: 2500,
-      });
-      await new Promise((r) => setTimeout(r, 2500));
-      this.$router.replace("/");
+      this.$q
+        .dialog({
+          message: "Voulez vous supprimer ce sujet?",
+          cancel: true,
+          persistent: true,
+        })
+        .onOk(async () => {
+          await this.topicStore.deleteTopic(this.topicId);
+          this.$q.notify({
+            spinner: true,
+            message: "Suppression du topic...",
+            timeout: 2500,
+          });
+          await new Promise((r) => setTimeout(r, 2500));
+          this.$router.replace("/");
+        });
     },
   },
   watch: {

@@ -106,14 +106,22 @@ export default {
         .catch((err) => console.log(err));
     },
     async deleteSelf() {
-      await this.userStore.deleteUser();
-      this.$q.notify({
-        message: "Compte supprimé!",
-        timeout: 2500,
-      });
-      this.userStore.disconnect;
-      this.$router.replace("/login");
-      console.log("user deleted");
+      this.$q
+        .dialog({
+          message: "Voulez vous supprimer votre compte?",
+          cancel: true,
+          persistent: true,
+        })
+        .onOk(async () => {
+          await this.userStore.deleteUser();
+          this.$q.notify({
+            message: "Compte supprimé!",
+            timeout: 2500,
+          });
+          this.userStore.disconnect;
+          this.$router.replace("/login");
+          console.log("user deleted");
+        });
     },
   },
 };

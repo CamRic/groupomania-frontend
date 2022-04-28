@@ -7,12 +7,12 @@
     </div>
     <q-separator size="2px" />
     <div
-      class="topicBody-qcard__img flex center justify-center"
+      class="topicBody-qcard__img flex center justify-center q-my-sm"
       v-if="imageUrl"
     >
       <img :src="imageUrl" class="topic-img" />
-      <q-separator size="2px" />
     </div>
+    <q-separator v-if="imageUrl" size="2px" />
     <div class="topicBody-qcard__body q-ma-md">
       {{ body }}
     </div>

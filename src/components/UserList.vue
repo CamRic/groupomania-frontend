@@ -37,24 +37,21 @@ const columns = [
     align: "left",
     field: (row) => row.email,
   },
-  // {
-  //   name: "user_id",
-  //   label: "ID",
-  //   align: "left",
-  //   field: (row) => row.user_id,
-  // },
 ];
 
 import { api } from "src/boot/axios";
-import { Cookies } from "quasar";
+import { Cookies, useQuasar } from "quasar";
+import { Dialog } from "quasar";
 
 export default {
   name: "UserList",
 
   data() {
+    const $q = useQuasar();
     var userList = [];
     var rows = [];
     return {
+      $q,
       userList,
       selected: [],
       columns,
@@ -83,12 +80,21 @@ export default {
 
   methods: {
     async deleteUser(data) {
-      for (let user of this.selected) {
-        await api.delete("/user/" + user.user_id, {
-          headers: { Authorization: "Bearer: " + Cookies.get("token") },
+      this.$q
+        .dialog({
+          title: "Confirmation",
+          message: "Suppression des utilisateurs sélectionnés?",
+          cancel: true,
+          persistent: true,
+        })
+        .onOk(async () => {
+          for (let user of this.selected) {
+            await api.delete("/user/" + user.user_id, {
+              headers: { Authorization: "Bearer: " + Cookies.get("token") },
+            });
+          }
+          this.refreshData();
         });
-      }
-      this.refreshData();
     },
     async refreshData(data) {
       this.rows = [];
