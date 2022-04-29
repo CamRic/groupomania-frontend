@@ -51,6 +51,10 @@ export default {
       // check user input
       if (this.replyBody.length < 3) {
         console.log("user input invalid!");
+        this.$q.notify({
+          message: "Pas de message",
+          timeout: 2000,
+        });
         return;
       }
       await api

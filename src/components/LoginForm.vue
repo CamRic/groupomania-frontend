@@ -32,6 +32,7 @@
 <script>
 import { useUserStore } from "src/pinia/user.store.js";
 import { Notify, useQuasar } from "quasar";
+import { api } from "src/boot/axios";
 
 export default {
   name: "LoginForm",
@@ -56,24 +57,45 @@ export default {
         this.$q.notify({
           message: "Entrée(s) invalide(s)!",
           timeout: 2000,
-          //position: center,
+          position: "center",
         });
         return;
       }
-      if (await this.userStore.userLogin(this.email, this.password)) {
-        this.$router.push({ path: "/" });
-        this.$q.notify({
-          message: "Bienvenue!",
-          timeout: 2500,
-          position: "top",
+      api
+        .post("/user/login", {
+          email: this.email,
+          password: this.password,
+        })
+        .then((response) => {
+          var d = new Date();
+          d.setTime(d.getTime() + 6 * 60 * 60 * 1000);
+          document.cookie =
+            "token=" + response.data.token + ";expires=" + d.toUTCString();
+          document.cookie =
+            "user_role=" +
+            response.data.user_role +
+            ";expires=" +
+            d.toUTCString();
+          this.userStore.loggedIn = true;
+          this.userStore.user_email = response.data.user_email;
+          this.userStore.user_id = response.data.user_id;
+          this.userStore.user_first_name = response.data.user_firstName;
+          this.userStore.user_last_name = response.data.user_lastName;
+          this.userStore.user_access_level = response.data.user_role;
+          this.$router.push("/");
+          Notify.create({
+            message: "Bienvenue!",
+            timeout: 2500,
+            position: "top",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          Notify.create({
+            message: "Mot de passe ou email invalide",
+            timeout: 2000,
+          });
         });
-      } else {
-        console.log("cant connect"); // notif
-        this.$q.notify({
-          message: "Une erreur est survenue pendant la connexion.",
-          timeout: 2500,
-        });
-      }
     },
   },
 };

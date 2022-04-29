@@ -56,7 +56,11 @@ export default {
     onSubmit(e) {
       // check user input
       if (this.topicTitle.length < 3 || this.topicBody.length < 3) {
-        console.log("invalid input(s)"); // notif
+        console.log("invalid input(s)");
+        this.$q.notify({
+          message: "Entrée(s) invalide(s)",
+          timeout: 2000,
+        });
         return;
       }
 
@@ -84,7 +88,13 @@ export default {
           await new Promise((r) => setTimeout(r, 1500));
           this.$router.replace("/topic/" + topic.data.topic.topic_id);
         })
-        .catch(() => console.log("error creating topic"));
+        .catch((err) => {
+          console.log("error creating topic");
+          this.$q.notify({
+            message: "Erreur lors de la création du sujet",
+            timeout: 2000,
+          });
+        });
     },
     handleFileUpload(event) {
       this.file = event.target.files[0];

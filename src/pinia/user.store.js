@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { api } from "src/boot/axios";
 import { Cookies, Notify } from "quasar";
+import Router from "../router/index";
 
 export const useUserStore = defineStore("user_store", {
   state: () => ({
@@ -38,24 +39,64 @@ export const useUserStore = defineStore("user_store", {
 
   actions: {
     async userLogin(inEmail, inPassword) {
-      const response = await api.post("http://localhost:3000/api/user/login", {
-        email: inEmail,
-        password: inPassword,
-      });
-      console.log(response);
-      var d = new Date();
-      d.setTime(d.getTime() + 60 * 60 * 1000);
-      document.cookie =
-        "token=" + response.data.token + ";expires=" + d.toUTCString();
-      document.cookie =
-        "user_role=" + response.data.user_role + ";expires=" + d.toUTCString();
-      this.loggedIn = true;
-      this.user_email = response.data.user_email;
-      this.user_id = response.data.user_id;
-      this.user_first_name = response.data.user_firstName;
-      this.user_last_name = response.data.user_lastName;
-      this.user_access_level = response.data.user_role;
-      return response;
+      api
+        .post("/user/login", {
+          email: inEmail,
+          password: inPassword,
+        })
+        .then((response) => {
+          var d = new Date();
+          d.setTime(d.getTime() + 6 * 60 * 60 * 1000);
+          document.cookie =
+            "token=" + response.data.token + ";expires=" + d.toUTCString();
+          document.cookie =
+            "user_role=" +
+            response.data.user_role +
+            ";expires=" +
+            d.toUTCString();
+          this.loggedIn = true;
+          this.user_email = response.data.user_email;
+          this.user_id = response.data.user_id;
+          this.user_first_name = response.data.user_firstName;
+          this.user_last_name = response.data.user_lastName;
+          this.user_access_level = response.data.user_role;
+          //Router.push("/");
+          // this.$router.push({ path: "/" });
+          //Router.routes.push("/");
+          Notify.create({
+            message: "Bienvenue!",
+            timeout: 2500,
+            position: "top",
+          });
+          return true;
+        })
+        .catch((err) => {
+          console.log(err);
+          Notify.create({
+            message: "Mot de passe ou email invalide",
+            timeout: 2000,
+          });
+          return false;
+        });
+
+      // const response = await api.post("http://localhost:3000/api/user/login", {
+      //   email: inEmail,
+      //   password: inPassword,
+      // });
+      // console.log(response);
+      // var d = new Date();
+      // d.setTime(d.getTime() + 60 * 60 * 1000);
+      // document.cookie =
+      //   "token=" + response.data.token + ";expires=" + d.toUTCString();
+      // document.cookie =
+      //   "user_role=" + response.data.user_role + ";expires=" + d.toUTCString();
+      // this.loggedIn = true;
+      // this.user_email = response.data.user_email;
+      // this.user_id = response.data.user_id;
+      // this.user_first_name = response.data.user_firstName;
+      // this.user_last_name = response.data.user_lastName;
+      // this.user_access_level = response.data.user_role;
+      // return response;
     },
     retrieveConnection() {
       api({
