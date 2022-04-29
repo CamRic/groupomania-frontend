@@ -53,6 +53,11 @@ export default {
     async onSubmit(e) {
       if (this.password.length === 0 || this.email.length === 0) {
         console.log("error email or password invalid"); // notif
+        this.$q.notify({
+          message: "Entrée(s) invalide(s)!",
+          timeout: 2000,
+          //position: center,
+        });
         return;
       }
       if (await this.userStore.userLogin(this.email, this.password)) {
@@ -64,6 +69,10 @@ export default {
         });
       } else {
         console.log("cant connect"); // notif
+        this.$q.notify({
+          message: "Une erreur est survenue pendant la connexion.",
+          timeout: 2500,
+        });
       }
     },
   },

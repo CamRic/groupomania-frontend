@@ -38,6 +38,15 @@
         label="Mot de passe"
         type="password"
       />
+      <q-input
+        class="q-mb-md groupomania-qinput"
+        borderless
+        filled
+        stack-label
+        v-model="newPasswordInput"
+        label="Vérification mot de passe"
+        type="password"
+      />
 
       <div class="flex justify-between">
         <q-btn label="modifier" type="submit" color="primary" />
@@ -87,23 +96,31 @@ export default {
 
   methods: {
     onSubmit(e) {
-      api
-        .put(
-          "/user/" + this.userStore.getUserId,
-          {
-            email: this.emailInput,
-            first_name: this.firstNameInput,
-            last_name: this.lastNameInput,
-            password: this.passwordInput,
-          },
-          { headers: { Authorization: "Bearer: " + Cookies.get("token") } }
-        )
-        .then(async (res) => {
-          await this.userStore.resetData();
-          await new Promise((r) => setTimeout(r, 2500));
-          this.$forceUpdate();
-        })
-        .catch((err) => console.log(err));
+      // verif mdp
+      if (this.newPasswordInput === this.passwordInput) {
+        api
+          .put(
+            "/user/" + this.userStore.getUserId,
+            {
+              email: this.emailInput,
+              first_name: this.firstNameInput,
+              last_name: this.lastNameInput,
+              password: this.passwordInput,
+            },
+            { headers: { Authorization: "Bearer: " + Cookies.get("token") } }
+          )
+          .then(async (res) => {
+            await this.userStore.resetData();
+            await new Promise((r) => setTimeout(r, 2500));
+            this.$forceUpdate();
+          })
+          .catch((err) => console.log(err));
+      } else {
+        this.$q.notify({
+          message: "Mot de passe invalide!",
+          timeout: 2000,
+        });
+      }
     },
     async deleteSelf() {
       this.$q

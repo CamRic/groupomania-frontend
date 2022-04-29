@@ -128,7 +128,7 @@ export const useUserStore = defineStore("user_store", {
           this.user_email = user.data.user.email;
           this.user_first_name = user.data.user.first_name;
           this.user_last_name = user.data.user.last_name;
-          this.user_access_level = response.data.user_role;
+          this.user_access_level = user.data.user_role;
         })
         .catch((err) => console.log(err));
     },

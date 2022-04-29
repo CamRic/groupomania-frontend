@@ -1,8 +1,9 @@
-! modif mdp
-! err login, topic creation, post creation
+
+! err login, topic creation, post creation => !! erreur de connexion refaire dans login forme a la fin enfin voila quoi fils de pute
 ! list bottom (dynamic scroll)
 (! auth)
 ! modifier post/topic
 (! pp)
+! deco => suppr cookies
 
 ! PLAN PRESENTATION
