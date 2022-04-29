@@ -1,8 +1,10 @@
 
-! list bottom (dynamic scroll)
 (! auth)
 ! modifier post/topic
-(! pp)
-! deco => suppr cookies
+couleur notif
+modif mdp
+(historique)
 
+! test auth
+! faux comptes + posts
 ! PLAN PRESENTATION

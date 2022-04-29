@@ -4,7 +4,11 @@
       :rows="rows"
       :columns="columns"
       :row-key="(row) => row.topic_id"
+      virtual-scroll
+      v-model:pagination="pagination"
+      :rows-per-page-options="[0]"
       @row-click="goToTopicPage"
+      style="border-radius: 0px 0px 25px 25px"
     >
     </q-table>
   </div>
@@ -54,6 +58,7 @@ export default {
       rows,
       topicStore,
       topicList,
+      pagination: { rowsPerPage: 10 },
     };
   },
 

@@ -3,6 +3,7 @@
     color="red-8"
     :label="userStore.getFirstName"
     class="header-dropdown"
+    style="border-radius: 5px 5px 0px 0px"
   >
     <q-list>
       <router-link to="/user">

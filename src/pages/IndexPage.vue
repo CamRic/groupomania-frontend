@@ -16,6 +16,7 @@
           height="75px"
           width="300px"
           class="text-white shadow-1 rounded-borders topic-carousel"
+          style="border-radius: 25px 25px 0px 0px"
         >
           <q-carousel-slide name="latest" class="text-center">
             <div class="q-mt-md text-center">Les derniers sujets</div>

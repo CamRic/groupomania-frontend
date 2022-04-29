@@ -118,6 +118,16 @@ export const useUserStore = defineStore("user_store", {
         })
         .catch((err) => console.log(err));
     },
+    getCookie(name) {
+      return document.cookie.split(";").some((c) => {
+        return c.trim().startsWith(name + "=");
+      });
+    },
+    deleteCookie(name) {
+      if (this.getCookie(name)) {
+        document.cookie = name + "=" + ";expires=-1";
+      }
+    },
     disconnect() {
       this.loggedIn = false;
       this.user_email = "";
@@ -125,6 +135,8 @@ export const useUserStore = defineStore("user_store", {
       this.user_first_name = "";
       this.user_last_name = "";
       this.user_access_level = "";
+      this.deleteCookie("token");
+      this.deleteCookie("user_role");
     },
     async deleteUser(data) {
       await api
