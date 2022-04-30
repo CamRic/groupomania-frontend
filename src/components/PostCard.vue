@@ -13,6 +13,12 @@
         {{ createdAt.split("T").join(" ").substring(0, 19) }}
       </p>
       <q-icon
+        v-if="userStore.getUserId === author_id"
+        class="fa-solid fa-pen gr-icon q-ml-auto q-mr-md"
+        color="blue-4"
+        @click="modifySelf"
+      />
+      <q-icon
         v-if="
           userStore.getUserId === author_id || userStore.getUserRole === 'admin'
         "
@@ -67,6 +73,37 @@ export default {
             timeout: 1500,
           });
           this.$emit("deleted");
+        });
+    },
+    async modifySelf() {
+      this.$q
+        .dialog({
+          title: "Modifier la réponse",
+          prompt: {
+            model: "",
+            isValid: (val) => val.length > 2,
+            type: "textarea",
+          },
+          cancel: true,
+          persistent: true,
+        })
+        .onOk((data) => {
+          // send modify post request
+          console.log(data);
+          api
+            .put(
+              "/post/" + this.post_id,
+              {
+                body: data,
+              },
+              {
+                headers: { Authorization: "Bearer: " + Cookies.get("token") },
+              }
+            )
+            .then((res) => {
+              this.$emit("deleted");
+            })
+            .catch((err) => console.log(err));
         });
     },
   },

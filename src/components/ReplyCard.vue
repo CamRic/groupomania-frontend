@@ -11,7 +11,12 @@
         placeholder="Ecrivez votre réponse ici"
       />
       <q-separator />
-      <q-btn class="q-mt-md" type="submit" label="envoyer"></q-btn>
+      <q-btn
+        class="q-mt-md"
+        type="submit"
+        label="envoyer"
+        color="blue-8"
+      ></q-btn>
     </q-form>
   </q-card>
 </template>

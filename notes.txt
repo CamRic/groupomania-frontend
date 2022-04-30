@@ -1,10 +1,17 @@
 
 (! auth)
-! modifier post/topic
 couleur notif
-modif mdp
+(modif mdp)
 (historique)
 
 ! test auth
-! faux comptes + posts
+! faux comptes + posts + topics
+! test build
 ! PLAN PRESENTATION
+
+
+MODIF MDP:
+  sur le panneau de modif,
+    => data(bool modifpassword(false), passwordmodified(false)),
+    => bouton 'modifier mot de passe'
+    on click => modifpassword = true, - bouton + 2 input (ancien, nouveau)

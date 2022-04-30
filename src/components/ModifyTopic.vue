@@ -30,19 +30,22 @@
 
 <script>
 import { api } from "src/boot/axios";
+import { useRouter } from "vue-router";
 import { useUserStore } from "src/pinia/user.store";
 import { useTopicStore } from "src/pinia/topic.store";
 import { Cookies, useQuasar } from "quasar";
 
 export default {
-  name: "CreateTopic",
+  name: "ModifyTopic",
 
   data() {
     const topicStore = useTopicStore();
     const userStore = useUserStore();
     const $q = useQuasar;
     var file = null;
+    const topicId = useRouter().currentRoute.value.params.id;
     return {
+      topicId,
       topicStore,
       $q,
       file,
@@ -51,7 +54,6 @@ export default {
       userStore,
     };
   },
-
   methods: {
     onSubmit(e) {
       // check user input
@@ -67,35 +69,44 @@ export default {
       let formData = new FormData();
       formData.append("topicBody", this.topicBody);
       formData.append("title", this.topicTitle);
-      formData.append("user_id", this.userStore.user_id);
       formData.append("file", this.file);
 
       api
-        .post("http://localhost:3000/api/topic", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: "Bearer: " + Cookies.get("token"),
-          },
+        .put("/topic/" + this.topicId, formData, {
+          "Content-Type": "multipart/form-data",
+          headers: { Authorization: "Bearer: " + Cookies.get("token") },
         })
         .then(async (topic) => {
-          console.log("new topic created: " + topic);
-          this.topicStore.retrieveTopicData(topic.data.topic.topic_id);
+          this.topicStore.retrieveTopicData(this.topicId);
           this.$q.notify({
             spinner: true,
-            message: "Création du sujet...",
+            message: "Modification du sujet...",
             timeout: 1000,
           });
           await new Promise((r) => setTimeout(r, 1500));
-          this.$router.replace("/topic/" + topic.data.topic.topic_id);
+          this.$router.replace("/topic/" + this.topicId);
         })
         .catch((err) => {
-          console.log("error creating topic");
+          console.log("error updating topic");
           this.$q.notify({
-            message: "Erreur lors de la création du sujet",
+            message: "Erreur lors de la modification du sujet",
             timeout: 2000,
           });
         });
     },
+  },
+
+  beforeMount() {
+    api
+      .get("/topic/" + useRouter().currentRoute.value.params.id, {
+        headers: { Authorization: "Bearer: " + Cookies.get("token") },
+      })
+      .then((res) => {
+        this.topicTitle = res.data.topic.title;
+        this.topicBody = res.data.topic.body;
+        this.file = res.data.topic.imageUrl;
+      })
+      .catch((err) => console.log(err));
   },
 };
 </script>

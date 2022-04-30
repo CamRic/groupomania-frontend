@@ -8,10 +8,22 @@
       :creationDate="topicStore.getTopicCreationDate"
       :imageUrl="topicStore.getTopicImageUrl"
     />
-    <div class="flex justify-start">
-      <q-btn label="actualiser" @click="reloadPost" />
+    <div class="row justify-end">
       <q-btn
-        class="q-ml-auto"
+        label="actualiser"
+        @click="reloadPost"
+        class="q-mr-auto"
+        color="green"
+      />
+      <q-btn
+        color="blue"
+        class="q-mr-sm"
+        v-if="topicStore.getTopicCreatorId === userStore.getUserId"
+        label="modifier"
+        @click="this.$router.replace('/modifyTopic/' + this.topicId)"
+      />
+      <q-btn
+        color="red"
         v-if="
           topicStore.getTopicCreatorId === userStore.getUserId ||
           this.userRole === 'admin'
