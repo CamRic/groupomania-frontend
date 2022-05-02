@@ -97,30 +97,24 @@ export default {
   methods: {
     onSubmit(e) {
       // verif mdp
-      if (this.newPasswordInput === this.passwordInput) {
-        api
-          .put(
-            "/user/" + this.userStore.getUserId,
-            {
-              email: this.emailInput,
-              first_name: this.firstNameInput,
-              last_name: this.lastNameInput,
-              password: this.passwordInput,
-            },
-            { headers: { Authorization: "Bearer: " + Cookies.get("token") } }
-          )
-          .then(async (res) => {
-            await this.userStore.resetData();
-            await new Promise((r) => setTimeout(r, 2500));
-            this.$forceUpdate();
-          })
-          .catch((err) => console.log(err));
-      } else {
-        this.$q.notify({
-          message: "Mot de passe invalide!",
-          timeout: 2000,
-        });
-      }
+
+      api
+        .put(
+          "/user/" + this.userStore.getUserId,
+          {
+            email: this.emailInput,
+            first_name: this.firstNameInput,
+            last_name: this.lastNameInput,
+            password: this.passwordInput,
+          },
+          { headers: { Authorization: "Bearer: " + Cookies.get("token") } }
+        )
+        .then(async (res) => {
+          await this.userStore.resetData();
+          await new Promise((r) => setTimeout(r, 2500));
+          this.$forceUpdate();
+        })
+        .catch((err) => console.log(err));
     },
     async deleteSelf() {
       this.$q

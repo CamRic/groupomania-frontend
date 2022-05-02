@@ -20,7 +20,10 @@
           </q-item-section>
         </q-item>
       </router-link>
-      <router-link v-if="this.userRole === 'admin'" to="/admin">
+      <router-link
+        v-if="this.userStore.user_access_level === 'admin'"
+        to="/admin"
+      >
         <q-item>
           <q-item-section>
             <q-item-label>Admin</q-item-label>

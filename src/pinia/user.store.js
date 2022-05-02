@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { api } from "src/boot/axios";
 import { Cookies, Notify } from "quasar";
-import Router from "../router/index";
 
 export const useUserStore = defineStore("user_store", {
   state: () => ({
@@ -54,17 +53,15 @@ export const useUserStore = defineStore("user_store", {
             response.data.user_role +
             ";expires=" +
             d.toUTCString();
+          console.log(response);
           this.loggedIn = true;
           this.user_email = response.data.user_email;
           this.user_id = response.data.user_id;
           this.user_first_name = response.data.user_firstName;
           this.user_last_name = response.data.user_lastName;
           this.user_access_level = response.data.user_role;
-          //Router.push("/");
-          // this.$router.push({ path: "/" });
-          //Router.routes.push("/");
           Notify.create({
-            message: "Bienvenue!",
+            message: "Bienvenue " + response.data.user_firstName + "!",
             timeout: 2500,
             position: "top",
           });
@@ -78,25 +75,6 @@ export const useUserStore = defineStore("user_store", {
           });
           return false;
         });
-
-      // const response = await api.post("http://localhost:3000/api/user/login", {
-      //   email: inEmail,
-      //   password: inPassword,
-      // });
-      // console.log(response);
-      // var d = new Date();
-      // d.setTime(d.getTime() + 60 * 60 * 1000);
-      // document.cookie =
-      //   "token=" + response.data.token + ";expires=" + d.toUTCString();
-      // document.cookie =
-      //   "user_role=" + response.data.user_role + ";expires=" + d.toUTCString();
-      // this.loggedIn = true;
-      // this.user_email = response.data.user_email;
-      // this.user_id = response.data.user_id;
-      // this.user_first_name = response.data.user_firstName;
-      // this.user_last_name = response.data.user_lastName;
-      // this.user_access_level = response.data.user_role;
-      // return response;
     },
     retrieveConnection() {
       api({
@@ -158,10 +136,6 @@ export const useUserStore = defineStore("user_store", {
                   headers: { Authorization: "Bearer: " + Cookies.get("token") },
                 })
                 .then((row) => {
-                  // Notify.create({
-                  //   message: "Compte Supprimé!",
-                  //   timeout: 2500,
-                  // });
                   console.log("user deleted " + row);
                 })
                 .catch((err) => console.log(err));
