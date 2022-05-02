@@ -11,6 +11,10 @@ const routes = [
         path: "/newtopic",
         component: () => import("pages/CreateTopicPage.vue"),
       },
+      {
+        path: "/modifyTopic/:id",
+        component: () => import("pages/ModifyTopicPage.vue"),
+      },
       { path: "/admin", component: () => import("pages/AdminPage.vue") },
     ],
   },

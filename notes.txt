@@ -1,5 +1,6 @@
-auth: stocker dans cookies -> ameliorer
 
-ext: emmet, snippet ...
+couleur notif
+(historique)
 
-date topiclist
+! faux comptes + posts + topics
+! PLAN PRESENTATION

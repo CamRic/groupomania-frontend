@@ -16,6 +16,7 @@
           height="75px"
           width="300px"
           class="text-white shadow-1 rounded-borders topic-carousel"
+          style="border-radius: 25px 25px 0px 0px"
         >
           <q-carousel-slide name="latest" class="text-center">
             <div class="q-mt-md text-center">Les derniers sujets</div>
@@ -23,13 +24,11 @@
           <q-carousel-slide name="user">
             <div class="q-mt-md text-center">Mes sujets</div>
           </q-carousel-slide>
-          <q-carousel-slide name="posts">
-            <div class="q-mt-md text-center">Mes réponses</div>
-          </q-carousel-slide>
         </q-carousel>
       </div>
       <div class="topic-list-container">
-        <TopicList />
+        <TopicList v-if="slide === 'latest'" />
+        <UserTopicList v-if="slide === 'user'" />
       </div>
     </div>
   </q-page>
@@ -40,6 +39,7 @@ import { defineComponent } from "vue";
 import { useUserStore } from "src/pinia/user.store";
 import { ref } from "vue";
 import TopicList from "src/components/TopicList.vue";
+import UserTopicList from "src/components/UserTopicList.vue";
 
 export default defineComponent({
   name: "IndexPage",
@@ -54,13 +54,14 @@ export default defineComponent({
     };
   },
 
-  components: { TopicList },
+  components: { TopicList, UserTopicList },
 });
 </script>
 
 <style lang="scss">
 .index-components-container {
-  width: 60%;
+  max-width: 650px;
+  width: 100%;
 }
 .topic-carousel {
   background-color: $groupomania3;

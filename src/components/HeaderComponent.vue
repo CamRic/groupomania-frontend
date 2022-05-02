@@ -1,19 +1,22 @@
 <template>
   <q-header
     elevated
-    class="q-px-xs flex row content-center groupomania-header"
-    style="height: 100px; justify-content: center"
+    class="flex row groupomania-header"
+    style="justify-content: center"
   >
-    <q-toolbar style="justify-content: center; width: 80%; margin: auto">
-      <q-img
-        src="../assets/icon-left-font-monochrome-white.png"
-        width="270px"
-        height="100px"
-        style="position: fixed"
-        @click="this.$router.replace({ path: '/' })"
-      />
+    <q-toolbar class="groupomania-header__toolbar" style="">
+      <router-link to="/">
+        <q-img
+          src="../assets/icon-left-font-monochrome-white.png"
+          width="270px"
+          height="100px"
+        />
+      </router-link>
 
-      <ProfilNav class="q-ml-auto" v-show="userStore.isLogged" />
+      <ProfilNav
+        v-show="userStore.isLogged"
+        :UserName="userStore.getFirstName"
+      />
     </q-toolbar>
   </q-header>
 </template>
@@ -48,9 +51,22 @@ export default {
 
   methods: {
     emitLeftDrawerOpen(data) {
-      console.log(this.currUrl.fullPath);
       this.$emit("showLeftDrawer", !this.showDrawer);
     },
   },
 };
 </script>
+
+<style lang="scss">
+.groupomania-header {
+  &__toolbar {
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 90%;
+    // @media (max-width: 425px) {
+    //   justify-content: space-between;
+    //   width: 100%;
+    // }
+  }
+}
+</style>

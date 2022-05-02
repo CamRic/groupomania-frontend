@@ -1,52 +1,115 @@
 <template>
   <div class="topic-global-container">
-    <h6>Sujet: {{ topic.title }}</h6>
-    <div class="flex justify-end">
-      <q-btn label="actualiser" />
-    </div>
-    <PostCard
-      :author="author"
-      :body="topic.body"
-      :createdAt="topic.createdAt"
+    <TopicCard
+      :author="topicStore.getTopicCreatorName"
+      :body="topicStore.getTopicBody"
+      :title="topicStore.getTopicTitle"
+      :authorId="topicStore.getTopicCreatorId"
+      :creationDate="topicStore.getTopicCreationDate"
+      :imageUrl="topicStore.getTopicImageUrl"
     />
+    <div class="row justify-end">
+      <q-btn
+        label="actualiser"
+        @click="reloadPost"
+        class="q-mr-auto"
+        color="green"
+      />
+      <q-btn
+        color="blue"
+        class="q-mr-sm"
+        v-if="topicStore.getTopicCreatorId === userStore.getUserId"
+        label="modifier"
+        @click="this.$router.replace('/modifyTopic/' + this.topicId)"
+      />
+      <q-btn
+        color="red"
+        v-if="
+          topicStore.getTopicCreatorId === userStore.getUserId ||
+          this.userRole === 'admin'
+        "
+        label="supprimer"
+        @click="deleteTopic"
+      />
+    </div>
 
-    <ReplyCard :topicId="topic.topic_id" />
+    <div v-for="post in topicStore.getTopicPostList" :key="post">
+      <PostCard
+        :author="post.author"
+        :body="post.body"
+        :createdAt="post.createdAt"
+        :author_id="post.user_id"
+        :post_id="post.post_id"
+        @deleted="reloadPage"
+      />
+    </div>
+
+    <ReplyCard :topicId="topicStore.getTopicId" @emitted="reloadPage" />
   </div>
 </template>
 
 <script>
 import PostCard from "src/components/PostCard.vue";
-import { api } from "src/boot/axios";
+import { useUserStore } from "src/pinia/user.store";
 import ReplyCard from "src/components/ReplyCard.vue";
+import { useTopicStore } from "src/pinia/topic.store";
+import TopicCard from "./TopicCard.vue";
+import { Cookies, Notify, useQuasar } from "quasar";
 
 export default {
   name: "TopicView",
 
-  components: {
-    PostCard,
-    ReplyCard,
-    PostCard,
-  },
+  components: { PostCard, ReplyCard, TopicCard },
 
   props: {
-    topic: Object,
-    author: String,
-    title: String,
+    topicId: String,
   },
 
   data() {
-    var topicData = JSON.parse(JSON.stringify(this.topic));
-    console.log(topicData);
-    var posts = topicData.replies;
-    console.log(posts);
+    const $q = useQuasar();
+    const topicStore = useTopicStore();
+    const userStore = useUserStore();
+    const userRole = Cookies.get("user_role");
     return {
-      topicName: "Default topic name",
-      authorName: "",
-      topicData,
-      posts,
+      $q,
+      userRole,
+      userStore,
+      topicStore,
     };
   },
-  methods: {},
+  methods: {
+    reloadPost() {
+      this.topicStore.reloadTopicPostsList(this.topicId);
+      this.$forceUpdate;
+    },
+    async reloadPage() {
+      await new Promise((r) => setTimeout(r, 2500));
+      this.reloadPost();
+    },
+    async deleteTopic() {
+      this.$q
+        .dialog({
+          message: "Voulez vous supprimer ce sujet?",
+          cancel: true,
+          persistent: true,
+        })
+        .onOk(async () => {
+          await this.topicStore.deleteTopic(this.topicId);
+          this.$q.notify({
+            spinner: true,
+            message: "Suppression du topic...",
+            timeout: 2500,
+          });
+          await new Promise((r) => setTimeout(r, 2500));
+          this.$router.replace("/");
+        });
+    },
+  },
+  watch: {
+    $route(to, from) {
+      this.topicStore.$reset;
+    },
+  },
 };
 </script>
 <style lang="scss">

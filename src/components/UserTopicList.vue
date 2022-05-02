@@ -13,7 +13,6 @@
     </q-table>
   </div>
 </template>
-
 <script>
 import { useUserStore } from "../pinia/user.store";
 import { useTopicStore } from "src/pinia/topic.store";
@@ -36,16 +35,23 @@ const columns = [
     field: (row) => row.auteur,
   },
   {
-    name: "date",
+    name: "messages",
     required: true,
-    label: "Date",
+    label: "Messages",
     align: "left",
-    field: (row) => row.date,
+    field: (row) => row.messages,
+  },
+  {
+    name: "dernier",
+    required: true,
+    label: "Dernier",
+    align: "left",
+    field: (row) => row.dernier,
   },
 ];
 
 export default {
-  name: "TopicList",
+  name: "UserTopicList",
 
   data() {
     const userStore = useUserStore();
@@ -64,34 +70,19 @@ export default {
 
   created(data) {
     api
-      .get("http://localhost:3000/api/topic", {
-        headers: { Authorization: "Bearer: " + Cookies.get("token") },
+      .get("/topic/user/" + this.userStore.getUserId, {
+        headers: { Authorization: "Bearer " + Cookies.get("token") },
       })
       .then((topics) => {
         this.topicList = topics.data.topics;
         for (let i = 0; i < this.topicList.length; i++) {
-          api
-            .get(
-              "http://localhost:3000/api/user/" + this.topicList[i].user_id,
-              {
-                headers: { Authorization: "Bearer: " + Cookies.get("token") },
-              }
-            )
-            .then((user) => {
-              var userName =
-                user.data.user.first_name + " " + user.data.user.last_name;
-              this.rows.push({
-                sujet: this.topicList[i].title,
-                auteur: userName,
-                messages: this.topicList[i].replies.replies.length,
-                date: this.topicList[i].createdAt
-                  .split("T")
-                  .join(" ")
-                  .substring(0, 19),
-                topic_id: this.topicList[i].topic_id,
-              });
-            })
-            .catch((err) => console.log(err));
+          this.rows.push({
+            sujet: this.topicList[i].title,
+            auteur: this.userStore.getUserName,
+            messages: this.topicList[i].replies.replies.length,
+            dernier: this.topicList[i].updatedAt,
+            topic_id: this.topicList[i].topic_id,
+          });
         }
       })
       .catch((err) => console.log(err));
@@ -107,5 +98,4 @@ export default {
   },
 };
 </script>
-
 <style lang="scss"></style>
