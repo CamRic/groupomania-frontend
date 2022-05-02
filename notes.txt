@@ -1,17 +1,8 @@
 
-(! auth)
 couleur notif
-(modif mdp)
 (historique)
 
 ! test auth
 ! faux comptes + posts + topics
-! test build
+! test build => pb icon
 ! PLAN PRESENTATION
-
-
-MODIF MDP:
-  sur le panneau de modif,
-    => data(bool modifpassword(false), passwordmodified(false)),
-    => bouton 'modifier mot de passe'
-    on click => modifpassword = true, - bouton + 2 input (ancien, nouveau)

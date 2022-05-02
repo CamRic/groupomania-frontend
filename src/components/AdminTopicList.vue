@@ -105,6 +105,7 @@ export default {
     async refreshData(data) {
       this.rows = [];
       this.topicList = [];
+      this.selected = [];
       api
         .get("/topic", {
           headers: { Authorization: "Bearer: " + Cookies.get("token") },
@@ -119,7 +120,8 @@ export default {
               .then((user) => {
                 this.rows.push({
                   sujet: topic.title,
-                  author: user.data.first_name + " " + user.data.last_name,
+                  author:
+                    user.data.user.first_name + " " + user.data.user.last_name,
                   topic_id: topic.topic_id,
                 });
               })

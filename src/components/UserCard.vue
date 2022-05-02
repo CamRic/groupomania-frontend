@@ -38,7 +38,7 @@
         label="Mot de passe"
         type="password"
       />
-      <q-input
+      <!-- <q-input
         class="q-mb-md groupomania-qinput"
         borderless
         filled
@@ -46,7 +46,7 @@
         v-model="newPasswordInput"
         label="Vérification mot de passe"
         type="password"
-      />
+      /> -->
 
       <div class="flex justify-between">
         <q-btn label="modifier" type="submit" color="primary" />

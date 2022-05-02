@@ -75,6 +75,7 @@ export default {
           }
         )
         .then((res) => {
+          this.replyBody = "";
           this.$q.notify({
             spinner: true,
             message: "Envoi du message...",

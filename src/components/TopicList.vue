@@ -79,9 +79,7 @@ export default {
             )
             .then((user) => {
               var userName =
-                user.data.user["first_name"] +
-                " " +
-                user.data.user["last_name"];
+                user.data.user.first_name + " " + user.data.user.last_name;
               this.rows.push({
                 sujet: this.topicList[i].title,
                 auteur: userName,
