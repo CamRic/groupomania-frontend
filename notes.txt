@@ -2,7 +2,5 @@
 couleur notif
 (historique)
 
-! test auth
 ! faux comptes + posts + topics
-! test build => pb icon
 ! PLAN PRESENTATION

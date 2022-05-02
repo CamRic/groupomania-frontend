@@ -76,6 +76,7 @@ export default {
             response.data.user_role +
             ";expires=" +
             d.toUTCString();
+          console.log(response);
           this.userStore.loggedIn = true;
           this.userStore.user_email = response.data.user_email;
           this.userStore.user_id = response.data.user_id;
@@ -84,7 +85,7 @@ export default {
           this.userStore.user_access_level = response.data.user_role;
           this.$router.push("/");
           Notify.create({
-            message: "Bienvenue!",
+            message: "Bienvenue " + response.data.user_firstName + "!",
             timeout: 2500,
             position: "top",
           });
