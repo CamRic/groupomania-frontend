@@ -58,6 +58,8 @@ export default {
           message: "Entrée(s) invalide(s)!",
           timeout: 2000,
           position: "center",
+          color: "negative",
+          icon: "fa-solid fa-triangle-exclamation",
         });
         return;
       }
@@ -76,7 +78,6 @@ export default {
             response.data.user_role +
             ";expires=" +
             d.toUTCString();
-          console.log(response);
           this.userStore.loggedIn = true;
           this.userStore.user_email = response.data.user_email;
           this.userStore.user_id = response.data.user_id;
@@ -88,6 +89,7 @@ export default {
             message: "Bienvenue " + response.data.user_firstName + "!",
             timeout: 2500,
             position: "top",
+            color: "positive",
           });
         })
         .catch((err) => {
@@ -95,6 +97,8 @@ export default {
           Notify.create({
             message: "Mot de passe ou email invalide",
             timeout: 2000,
+            color: "negative",
+            icon: "fa-solid fa-triangle-exclamation",
           });
         });
     },

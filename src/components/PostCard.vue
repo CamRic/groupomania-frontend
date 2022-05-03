@@ -71,6 +71,7 @@ export default {
             spinner: true,
             message: "Suppression du message...",
             timeout: 1500,
+            color: "warning",
           });
           this.$emit("deleted");
         });
@@ -102,6 +103,12 @@ export default {
             )
             .then((res) => {
               this.$emit("deleted");
+              this.$q.notify({
+                spinner: true,
+                message: "Envoi du message...",
+                timeout: 2000,
+                color: "info",
+              });
             })
             .catch((err) => console.log(err));
         });

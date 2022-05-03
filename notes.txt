@@ -1,6 +1,61 @@
 
-couleur notif
-(historique)
+! bdd user
+! modififer image
+! topic card + post card
+(historic)
 
-! faux comptes + posts + topics
+! donees renvoyees securité
+! wcag + owasp
+
+! repos commun
+! TEST CLONE :
+
 ! PLAN PRESENTATION
+! doc api
+! README.MD
+
+
+
+=> PLAN (30sec)
+
+=> presentation du projet et ds outils utilisés (1min)
+  - MVP du réseau social groupomania permettant aux employés d'échanger
+  - outils utilisés:
+    * frontend: vuejs (spa), quasar (framework), axios (appels api), pinia (store)
+    * backend: node + express (création du server), bcrypt (hash), jwt, sequelize (requete + models bdd), multer (images),
+
+=> presentation de l'application (8min)
+  - création de compte (avec erreur),
+  - connexion (avec erreur)
+  - demo session persistente
+  - ajout d'un post sur topic existant, modification, suppression
+  - création d'un topic, modification, suppression,
+  - modification donnees utilisateur,
+  - suppression du compte
+  - connexion compte admin
+  - fonctionnalités admin (page topic + page admin)
+  - 404
+  - responsive
+  - deconnexion
+
+=> presentation du code source (8min)
+  - backend:
+    * architecture
+    * app.js + server.js
+    * models
+    * routes
+    * middleware
+    * controllers
+  - frontend
+    * architecture
+    * dossier source
+    * app.vue
+    * dossier boot
+    * dossier pages
+    * dossier layouts
+    * dossier components
+    * stores
+
+=> presentation de la base de donnees (1min)
+  - show tables
+  - describe

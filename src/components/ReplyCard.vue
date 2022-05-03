@@ -80,6 +80,7 @@ export default {
             spinner: true,
             message: "Envoi du message...",
             timeout: 2000,
+            color: "info",
           });
           this.$emit("emitted");
         })

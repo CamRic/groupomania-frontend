@@ -23,4 +23,12 @@ const test_account = [
     password: "1234",
     token: "",
   },
+  {
+    email: "test3@groupomania.fr",
+    first_name: "Philippe",
+    last_name: "Maurice",
+    user_id: "",
+    password: "12345",
+    token: "",
+  },
 ];

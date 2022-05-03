@@ -82,6 +82,7 @@ export default {
             spinner: true,
             message: "Modification du sujet...",
             timeout: 1000,
+            color: "info",
           });
           await new Promise((r) => setTimeout(r, 1500));
           this.$router.replace("/topic/" + this.topicId);

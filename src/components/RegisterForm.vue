@@ -98,6 +98,8 @@ export default {
           this.$q.notify({
             message: "Nouveau compte créé!",
             timeout: 2500,
+            color: "positive",
+            icon: "fa-solid fa-circle-check",
           });
           this.$emit("switchForm");
         })

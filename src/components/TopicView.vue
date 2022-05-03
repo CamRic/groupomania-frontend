@@ -99,6 +99,7 @@ export default {
             spinner: true,
             message: "Suppression du topic...",
             timeout: 2500,
+            color: "info",
           });
           await new Promise((r) => setTimeout(r, 2500));
           this.$router.replace("/");

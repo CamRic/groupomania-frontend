@@ -82,11 +82,9 @@ export const useTopicStore = defineStore("topic_store", {
           headers: { Authorization: "Bearer: " + Cookies.get("token") },
         }
       );
-      console.log(response.data.topic);
       let obj = response.data.topic;
       obj["createdAt"] = obj["createdAt"].split("T").join(" ").substring(0, 19);
       this.topicObject = { ...obj };
-      console.log(this.topicObject);
 
       // getting user name from db
       const response2 = await api.get(
@@ -119,7 +117,6 @@ export const useTopicStore = defineStore("topic_store", {
           }
         })
         .catch((err) => console.log(err));
-      console.log(this.topicObject);
       this.isLoaded = true;
       return this.topicObject;
     },

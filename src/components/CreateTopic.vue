@@ -84,6 +84,7 @@ export default {
             spinner: true,
             message: "Création du sujet...",
             timeout: 1000,
+            color: "info",
           });
           await new Promise((r) => setTimeout(r, 1500));
           this.$router.replace("/topic/" + topic.data.topic.topic_id);
@@ -93,6 +94,7 @@ export default {
           this.$q.notify({
             message: "Erreur lors de la création du sujet",
             timeout: 2000,
+            color: "warning",
           });
         });
     },
