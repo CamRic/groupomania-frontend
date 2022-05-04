@@ -24,6 +24,10 @@ export default {
     };
   },
 
+  created() {
+    this.topicStore.retrieveTopicData(this.topicId);
+  },
+
   watch: {
     $route(to, from) {
       this.topicStore.$reset;

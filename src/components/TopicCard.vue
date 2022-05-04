@@ -1,22 +1,24 @@
 <template>
-  <q-card class="topicBody-qcard q-my-md q-pa-md">
+  <q-card class="topicBody-qcard q-my-md q-pa-lg bg-grey-2">
     <div class="topicBody-qcard__header">
       <h5 class="q-my-sm q-pl-lg">Sujet: {{ title }}</h5>
       <h6 class="q-my-sm q-pl-lg">Auteur: {{ author }}</h6>
       <p class="q-my-sm q-pl-lg">Le {{ creationDate }}</p>
     </div>
-    <q-separator size="2px" />
-    <div
-      class="topicBody-qcard__img flex center justify-center q-my-sm"
+    <!-- <q-separator size="2px" /> -->
+    <q-card
+      class="topicBody-qcard__img flex center justify-center q-my-sm q-mx-auto q-pa-sm"
       v-if="imageUrl"
+      style="width: fit-content; height: fit-content"
+      bordered
     >
-      <img :src="imageUrl" class="topic-img" />
-    </div>
-    <q-separator v-if="imageUrl" size="2px" />
-    <div class="topicBody-qcard__body q-ma-md">
+      <img :src="imageUrl" class="topic-img" alt="image du sujet" />
+    </q-card>
+    <!-- <q-separator v-if="imageUrl" size="2px" /> -->
+    <q-card class="topicBody-qcard__body q-pa-lg" bordered>
       {{ body }}
-    </div>
-    <q-separator class="q-mb-md" size="2px" />
+    </q-card>
+    <!-- <q-separator class="q-mb-md" size="2px" /> -->
   </q-card>
 </template>
 <script>

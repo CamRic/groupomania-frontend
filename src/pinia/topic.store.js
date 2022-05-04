@@ -121,20 +121,6 @@ export const useTopicStore = defineStore("topic_store", {
       return this.topicObject;
     },
     async deleteTopic(topic_id) {
-      // api
-      //   .delete("/post/topic/" + topic_id, {
-      //     headers: { Authorization: "Bearer: " + Cookies.get("token") },
-      //   })
-      //   .then((res) => {
-      //     console.log(res);
-      //     console.log("aaposts deleted");
-      //     api
-      //       .delete("/topic/" + topic_id, {
-      //         headers: { Authorization: "Bearer: " + Cookies.get("token") },
-      //       })
-      //       .then((res1) => console.log("topic deleted"))
-      //       .catch((err) => console.log(err));
-      //   });
       api
         .delete("/topic/" + topic_id, {
           headers: { Authorization: "Bearer " + Cookies.get("token") },

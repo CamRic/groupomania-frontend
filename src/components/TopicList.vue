@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     async goToTopicPage(evt, row, index) {
-      await this.topicStore.retrieveTopicData(row.topic_id);
+      //await this.topicStore.retrieveTopicData(row.topic_id);
       this.$router.push({
         path: "/topic/" + row.topic_id,
         query: { author: row.auteur },

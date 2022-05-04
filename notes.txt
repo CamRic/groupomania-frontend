@@ -1,6 +1,4 @@
 
-! modififer image
-! topic card + post card
 ! secret
 (historic)
 

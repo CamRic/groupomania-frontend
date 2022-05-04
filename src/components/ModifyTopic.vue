@@ -11,9 +11,13 @@
         rounded
         standout
         use-chips
-        label="Ajouter une image"
+        label="Modifier image"
         accept=".jpg, image/*"
+        @update:model-value="onImageUpdate"
       />
+      <div v-if="imageUrl" class="q-mt-sm" ref="topicImage">
+        <img :src="imageUrl" alt="image du sujet" style="max-width: 100%" />
+      </div>
       <q-separator class="q-mt-md" />
       <q-input
         class="q-mb-md"
@@ -51,6 +55,7 @@ export default {
       file,
       topicTitle: "",
       topicBody: "",
+      imageUrl: "",
       userStore,
     };
   },
@@ -95,6 +100,18 @@ export default {
           });
         });
     },
+
+    onImageChange() {
+      this.imageUrl = "";
+    },
+
+    onImageUpdate(file) {
+      console.log("change");
+      console.log(file);
+      console.log(this.$refs.topicImage);
+      this.$refs.topicImage.innerHTML = "";
+      this.$refs.topicImage.innerText = "Image modifiée!";
+    },
   },
 
   beforeMount() {
@@ -106,6 +123,7 @@ export default {
         this.topicTitle = res.data.topic.title;
         this.topicBody = res.data.topic.body;
         this.file = res.data.topic.imageUrl;
+        this.imageUrl = res.data.topic.imageUrl;
       })
       .catch((err) => console.log(err));
   },
