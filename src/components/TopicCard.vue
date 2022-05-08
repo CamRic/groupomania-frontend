@@ -5,7 +5,6 @@
       <h6 class="q-my-sm q-pl-lg">Auteur: {{ author }}</h6>
       <p class="q-my-sm q-pl-lg">Le {{ creationDate }}</p>
     </div>
-    <!-- <q-separator size="2px" /> -->
     <q-card
       class="topicBody-qcard__img flex center justify-center q-my-sm q-mx-auto q-pa-sm"
       v-if="imageUrl"
@@ -14,11 +13,9 @@
     >
       <img :src="imageUrl" class="topic-img" alt="image du sujet" />
     </q-card>
-    <!-- <q-separator v-if="imageUrl" size="2px" /> -->
     <q-card class="topicBody-qcard__body q-pa-lg" bordered>
       {{ body }}
     </q-card>
-    <!-- <q-separator class="q-mb-md" size="2px" /> -->
   </q-card>
 </template>
 <script>

@@ -15,6 +15,13 @@
         accept=".jpg, image/*"
         @update:model-value="onImageUpdate"
       />
+      <q-btn
+        label="Supprimer Image"
+        color="warning"
+        class="q-mt-sm"
+        v-if="imageUrl"
+        @click="removeImage"
+      />
       <div v-if="imageUrl" class="q-mt-sm" ref="topicImage">
         <img :src="imageUrl" alt="image du sujet" style="max-width: 100%" />
       </div>
@@ -101,14 +108,12 @@ export default {
         });
     },
 
-    onImageChange() {
+    removeImage(data) {
+      this.file = null;
       this.imageUrl = "";
     },
 
     onImageUpdate(file) {
-      console.log("change");
-      console.log(file);
-      console.log(this.$refs.topicImage);
       this.$refs.topicImage.innerHTML = "";
       this.$refs.topicImage.innerText = "Image modifiée!";
     },

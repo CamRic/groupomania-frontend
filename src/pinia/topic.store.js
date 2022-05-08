@@ -47,6 +47,7 @@ export const useTopicStore = defineStore("topic_store", {
   },
 
   actions: {
+    // récupérer les réponses d'un topic
     reloadTopicPostsList(topic_id, data) {
       this.topicPosts = null;
       api
@@ -70,6 +71,7 @@ export const useTopicStore = defineStore("topic_store", {
         })
         .catch((err) => console.log(err));
     },
+    // données du topic
     async retrieveTopicData(topic_id, data) {
       this.isLoaded = false;
       this.topicObject = {};

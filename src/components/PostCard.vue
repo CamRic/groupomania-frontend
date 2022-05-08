@@ -3,11 +3,9 @@
     <div class="post-qcard__header">
       <h6 class="q-my-sm q-pl-md">{{ author }}</h6>
     </div>
-    <!-- <q-separator size="2px" /> -->
     <q-card class="post-qcard__body q-my-sm q-mx-md q-pa-md" bordered>
       {{ body }}
     </q-card>
-    <!-- <q-separator class="q-mt-md" size="2px" /> -->
     <div class="flex row justify-between items-center q-mx-md q-my-sm">
       <p class="q-my-sm">
         {{ createdAt.split("T").join(" ").substring(0, 19) }}
